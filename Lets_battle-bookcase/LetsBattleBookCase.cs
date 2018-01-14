@@ -85,14 +85,6 @@ namespace LetsBattleBookCase
 
         public virtual int LightAttack() { return 0; }
         public virtual int HeavyAttack() { return 0; }
-
-        //public virtual void Move(Character a, int where, char[] gameArena) { }
-        /*
-        //Inventory / Items methods
-        public virtual int GetItemDamage(Item item) { return 0; }
-        public virtual string GetItemName(Item item) { return ""; } //get item name 
-        public virtual int GetSwordSharpness() { return 0; } //get item sharpness
-        */
 #endregion
     }
 
@@ -208,28 +200,55 @@ namespace LetsBattleBookCase
 
     public abstract class Inventory
     {
-        
+        //public List<Item> inventory = new List<Item>();
 
+        //public List<Item> Invent { get { return inventory; } }
+
+        public string GetInventory(List<Item> inventory)
+        {
+            string a = "";
+            foreach (Item i in inventory) a += i + Environment.NewLine;
+            return a;
+        }
+
+        public virtual string ItemInfo(List<Item> inventory) { return ""; }
+
+        public virtual Item CreateSword(string name, int damage) { return null; }
+        
     }
 
     public class Item : Inventory
     {
         protected string nameOfItem;
         protected int damageOfItem;
-
-        public string ItemName { get { return nameOfItem; } set { nameOfItem = value; } }
-        public int ItemDamage { get { return damageOfItem; } set { damageOfItem = value; } }
-
+        
         public Item() { }
-
+        
         public Item(string nme, int dmg)
         {
             nameOfItem = nme;
             damageOfItem = dmg;
         }
 
-        public string ItemInfo() { return Convert.ToString(ItemName + " " + ItemDamage); }
+        public string ItemName { get { return nameOfItem; } set { nameOfItem = value; } }
+        public int ItemDamage { get { return damageOfItem; } set { damageOfItem = value; } }
 
+        public override string ItemInfo(List<Item> inventory)
+        {
+            string a = "";
+            foreach (Item it in inventory)
+            {
+                a += it.ItemName + it.ItemDamage + Environment.NewLine;
+            }
+            //return Convert.ToString(ItemName + " " + ItemDamage);
+            return a;
+        }
+
+        public override Item CreateSword(string name, int damage)
+        {
+            Item item = new Sword(name, damage, 10);
+            return item;
+        }
     }
 
 #region items
@@ -238,7 +257,7 @@ namespace LetsBattleBookCase
     {
         int sharpness = 0;
 
-        public Sword(string nme, int dmg, int sness) : base(nme, dmg) { sharpness = sness; }
+        public Sword(string nme, int dmg, int sness) :base(nme,dmg) { sharpness = sness; }
 
         public int GetSwordSharpness() { return sharpness; }
     }
@@ -247,7 +266,7 @@ namespace LetsBattleBookCase
 
 #endregion
 
-    public class GameArena //: Player
+    public class GameArena
     {
         public int wIP;
         public int wIE;

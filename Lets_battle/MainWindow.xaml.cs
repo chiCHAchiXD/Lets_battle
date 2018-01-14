@@ -26,10 +26,12 @@ namespace Lets_battle
         public Player enemy;
         Creation cr = new Creation();
         GameArena gA = new GameArena(10, 1, 9);
+        Item mec = new Item();
+        public List<Item> inventP = new List<Item>();
         public int whoP;
         public int whoE;
         public int classP;
-#endregion
+        #endregion
 
         public MainWindow()
         {
@@ -44,7 +46,8 @@ namespace Lets_battle
             int dam = createPlayer.damage;
             int def = createPlayer.defense;
             whoP = 0;
-            
+            inventP.Add(mec.CreateSword("mec", 10));
+            inventP.Add(mec.CreateSword("novy mec", 20));
             player = cr.InitialyPlayer(h, dam, def, name, whoP, classP);
             enemy = cr.InitialyEnemy(player);
             whoE = enemy.Who;
@@ -278,32 +281,30 @@ namespace Lets_battle
                 WhoDied();
         }
 #endregion
+
         private void B_fight_Click(object sender, RoutedEventArgs e)
         {
             //player.Fight(enemy, 10);
-            HowShouldEveryoneAttack(1);
+           /* HowShouldEveryoneAttack(1);
             GetInformLb(4);
-            /*
+            */
             switch (classP)
             {
                 case 0:
-                    var attackWarior = new AttackWarrior();
-                    attackWarior.ShowDialog();
+                    HowShouldEveryoneAttack(1);
+                    GetInformLb(4);
                     break;
                 case 1:
-                    var attackMage = new AttackMage();
-                    attackMage.ShowDialog();
+                    HowShouldEveryoneAttack(1);
+                    GetInformLb(4);
                     break;
             }
-            */
+            
         }
 
         private void B_inventory_Click(object sender, RoutedEventArgs e)
         {
-            /*
-            var inventory = new PlayerInventory();
-            inventory.ShowDialog();
-            */
+            GetInformTb(mec.ItemInfo(inventP));
         }
 
         private void B_transfer_Click(object sender, RoutedEventArgs e)
