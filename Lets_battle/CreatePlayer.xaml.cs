@@ -22,13 +22,15 @@ namespace Lets_battle
     /// </summary>
     public partial class CreatePlayer : Window
     {
+        /*
         public string name = "";
         public int classP = 0;
         public int health = 0;
         public int damage = 0;
         public int defense = 0;
+        */
+        public Help he = new Help();
 
-        
 
         public CreatePlayer()
         {
@@ -37,19 +39,19 @@ namespace Lets_battle
 
         public void B_readInput_Click(object sender, RoutedEventArgs e)
         {
-            name = tb_inputName.Text;
-            classP = cb_Class.SelectedIndex;
+            he.Name = tb_inputName.Text;
+            he.ClassP = cb_Class.SelectedIndex;
 
-            health = Convert.ToInt32(tb_Health.Text);
-            damage = Convert.ToInt32(tb_Damage.Text);
-            defense = Convert.ToInt32(tb_Defense.Text);
+            he.Health = Convert.ToInt32(tb_Health.Text);
+            he.Damage = Convert.ToInt32(tb_Damage.Text);
+            he.Defense = Convert.ToInt32(tb_Defense.Text);
 
             Close();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            classP = cb_Class.SelectedIndex;
+            he.ClassP = cb_Class.SelectedIndex;
             Dice dice = new Dice();
 
             int h = dice.DiceRoll(20);
@@ -72,7 +74,7 @@ namespace Lets_battle
 
             #endregion
 
-            switch (classP)
+            switch (he.ClassP)
             {
                 case 0:
                     if (tbH < 7 || tbDa < 10 || tbDe < 5)

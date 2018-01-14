@@ -194,7 +194,7 @@ namespace LetsBattleBookCase
         }
         
     }
-    #endregion
+#endregion
 
 #region inventory
 
@@ -204,27 +204,27 @@ namespace LetsBattleBookCase
 
         //public List<Item> Invent { get { return inventory; } }
 
-        public string GetInventory(List<Item> inventory)
+        public string GetInventory(List<Weapon> inventory)
         {
             string a = "";
-            foreach (Item i in inventory) a += i + Environment.NewLine;
+            foreach (Weapon i in inventory) a += i + Environment.NewLine;
             return a;
         }
 
-        public virtual string ItemInfo(List<Item> inventory) { return ""; }
+        public virtual string WeaponInfo(List<Inventory> inventory) { return ""; }
 
-        public virtual Item CreateSword(string name, int damage) { return null; }
+        public virtual Weapon CreateSword(string name, int damage) { return null; }
         
     }
 
-    public class Item : Inventory
+    public class Weapon : Inventory
     {
         protected string nameOfItem;
         protected int damageOfItem;
         
-        public Item() { }
+        public Weapon() { }
         
-        public Item(string nme, int dmg)
+        public Weapon(string nme, int dmg)
         {
             nameOfItem = nme;
             damageOfItem = dmg;
@@ -233,10 +233,10 @@ namespace LetsBattleBookCase
         public string ItemName { get { return nameOfItem; } set { nameOfItem = value; } }
         public int ItemDamage { get { return damageOfItem; } set { damageOfItem = value; } }
 
-        public override string ItemInfo(List<Item> inventory)
+        public override string WeaponInfo(List<Inventory> inventory)
         {
             string a = "";
-            foreach (Item it in inventory)
+            foreach (Weapon it in inventory)
             {
                 a += it.ItemName + it.ItemDamage + Environment.NewLine;
             }
@@ -244,20 +244,20 @@ namespace LetsBattleBookCase
             return a;
         }
 
-        public override Item CreateSword(string name, int damage)
+        public override Weapon CreateSword(string name, int damage)
         {
-            Item item = new Sword(name, damage, 10);
+            Weapon item = new Sword(name, damage, 10);
             return item;
         }
     }
 
 #region items
 
-    class Sword : Item
+    class Sword : Weapon
     {
         int sharpness = 0;
 
-        public Sword(string nme, int dmg, int sness) :base(nme,dmg) { sharpness = sness; }
+        public Sword(string nme, int dmg, int sness) : base(nme,dmg) { sharpness = sness; }
 
         public int GetSwordSharpness() { return sharpness; }
     }
@@ -265,6 +265,30 @@ namespace LetsBattleBookCase
 #endregion
 
 #endregion
+
+    public class Help
+    {
+        public string name;
+        public int classP;
+        public int h;
+        public int dam;
+        public int def;
+        /*
+        public Help(string nme, int clasP, int he, int dama, int defe)
+        {
+            name = nme;
+            classP = clasP;
+            h = he;
+            dam = dama;
+            def = defe;
+        }
+        */
+        public string Name { get { return name; } set { name = value; } }
+        public int ClassP { get { return classP; } set { classP = value; } }
+        public int Health { get { return h; } set { h = value; } }
+        public int Damage { get { return dam; } set { dam = value; } }
+        public int Defense { get { return def; } set { def = value; } }
+    }
 
     public class GameArena
     {
