@@ -25,6 +25,7 @@ namespace Lets_battle
         public Player player;
         public Player enemy;
         Creation cr = new Creation();
+        GameArena gA = new GameArena(10, 1, 9);
         public int whoP;
         public int whoE;
         public int classP;
@@ -48,7 +49,7 @@ namespace Lets_battle
             enemy = cr.InitialyEnemy(player);
             whoE = enemy.Who;
 
-            GetInformLb(4);
+            GetInformLb(7);
         }
 
 #region infoInTb/Mb
@@ -106,7 +107,7 @@ namespace Lets_battle
                     L_enemyDefense.Content = enemy.Defense;
                     break;
                 case 3:
-                    //L_arena.Content = 
+                    L_arena.Content = gA.GetGameArenaLook();
                     break;
                 case 4:
                     L_playerName.Content = player.Name;
@@ -131,7 +132,7 @@ namespace Lets_battle
                     L_enemyHealth.Content = enemy.Health;
                     L_enemyDamage.Content = enemy.Damage;
                     L_enemyDefense.Content = enemy.Defense;
-                    //L_arena.Content = 
+                    L_arena.Content = gA.GetGameArenaLook();
                     break;
             }
         }
@@ -322,22 +323,25 @@ namespace Lets_battle
             */
         }
 
+        
+
+
         private void Key_pressed(object sender, KeyEventArgs e)
         {
-            /*
+            
             if (e.Key == Key.Left)
             {
-                wm.GetInformedIntoLabels(3, player, enemy);
-                game.Move(player, -1);
-                wm.GetInformedIntoLabels(3, player, enemy);
+                GetInformLb(3);
+                gA.Move(player, -1);
+                GetInformLb(3);
             }
             else if (e.Key == Key.Right)
             {
-                wm.GetInformedIntoLabels(3, player, enemy);
-                game.Move(player, +1);
-                wm.GetInformedIntoLabels(3, player, enemy);
+                GetInformLb(3);
+                gA.Move(player, +1);
+                GetInformLb(3);
             }
-            */
+            
         }
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
