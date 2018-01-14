@@ -30,6 +30,10 @@ namespace Lets_battle
         public List<Item> inventP = new List<Item>();
         public int whoP;
         public int whoE;
+        /// <summary>
+        /// 0 - warrior
+        /// 1 - mage
+        /// </summary>
         public int classP;
         #endregion
 
@@ -51,6 +55,8 @@ namespace Lets_battle
             player = cr.InitialyPlayer(h, dam, def, name, whoP, classP);
             enemy = cr.InitialyEnemy(player);
             whoE = enemy.Who;
+            Gb_attack_warrior.Visibility = Visibility.Hidden;
+            Gb_attack_mage.Visibility = Visibility.Hidden;
 
             GetInformLb(7);
         }
@@ -139,7 +145,7 @@ namespace Lets_battle
                     break;
             }
         }
-        #endregion
+#endregion
 
 #region Ai
         public void WhoDied()
@@ -151,13 +157,17 @@ namespace Lets_battle
 
                 GetInformTb("you died" + Environment.NewLine);
                 B_fight.IsEnabled = false;
+                B_attack_fireball.IsEnabled = false;
+                B_attack_iceball.IsEnabled = false;
+                B_attack_heavy.IsEnabled = false;
+                B_attack_light.IsEnabled = false;
             }
 
             else
             {
                 GetInformTb(enemy.Name + " died" + Environment.NewLine);
                 player.LevelIncrease(); // players livelo + 1
-                cr.NextEnemy(whoE, player); // add another enemy
+                enemy = cr.NextEnemy(whoE, player); // add another enemy
                 GetInformLb(4);
             }
 
@@ -291,12 +301,20 @@ namespace Lets_battle
             switch (classP)
             {
                 case 0:
+                    /*
                     HowShouldEveryoneAttack(1);
                     GetInformLb(4);
+                    */
+                    Gb_attack_mage.Visibility = Visibility.Hidden;
+                    Gb_attack_warrior.Visibility = Visibility.Visible;
                     break;
                 case 1:
+                    /*
                     HowShouldEveryoneAttack(1);
                     GetInformLb(4);
+                    */
+                    Gb_attack_warrior.Visibility = Visibility.Hidden;
+                    Gb_attack_mage.Visibility = Visibility.Visible;
                     break;
             }
             
@@ -309,23 +327,19 @@ namespace Lets_battle
 
         private void B_transfer_Click(object sender, RoutedEventArgs e)
         {
-            /*
             if ((sender as Button) == B_go_left)
             {
-
+                GetInformLb(3);
+                gA.Move(player, -1);
+                GetInformLb(3);
             }
-
             else if ((sender as Button) == B_go_right)
             {
-                wm.GetInformedIntoLabels(3, player, enemy);
-                game.Move(player, +1);
-                wm.GetInformedIntoLabels(3, player, enemy);
+                GetInformLb(3);
+                gA.Move(player, +1);
+                GetInformLb(3);
             }
-            */
         }
-
-        
-
 
         private void Key_pressed(object sender, KeyEventArgs e)
         {
@@ -345,8 +359,19 @@ namespace Lets_battle
             
         }
 
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        private void B_attack_Click(object sender, RoutedEventArgs e)
         {
+            switch (classP)
+            {
+                case 0:
+                    HowShouldEveryoneAttack(0);
+                    GetInformLb(4);
+                    break;
+                case 1:
+                    HowShouldEveryoneAttack(1);
+                    GetInformLb(4);
+                    break;
+            }
         }
     }
 }
