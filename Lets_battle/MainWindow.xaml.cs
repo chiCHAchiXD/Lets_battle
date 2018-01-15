@@ -51,11 +51,11 @@ namespace Lets_battle
             h.Name = createPlayer.name;
             h.Defense = createPlayer.defense;
             */
-            string name = createPlayer.name;
-            int classP = createPlayer.classP;
-            int h = createPlayer.health;
-            int dam = createPlayer.damage;
-            int def = createPlayer.defense;
+            name = createPlayer.he.Name;
+            classP = createPlayer.he.ClassP;
+            h = createPlayer.he.Health;
+            dam = createPlayer.he.Damage;
+            def = createPlayer.he.Defense;
         }
 
         private void B_settings_Click(object sender, RoutedEventArgs e)

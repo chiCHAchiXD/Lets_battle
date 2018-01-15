@@ -42,19 +42,16 @@ namespace Lets_battle
         {
             //it must be on top!!
             InitializeComponent();
-            /*
-            var createPlayer = new CreatePlayer();
-            createPlayer.ShowDialog(); //createPlayer Window will show when you run this program
-            string name = he.Name;
-            classP = he.ClassP;
-            int h = he.Health;
-            int dam = createPlayer.damage;
-            int def = createPlayer.defense;
-            */
+            string name = ((MainWindow)Application.Current.MainWindow).name;
+            classP = ((MainWindow)Application.Current.MainWindow).classP;
+            int h = ((MainWindow)Application.Current.MainWindow).h;
+            int dam = ((MainWindow)Application.Current.MainWindow).dam;
+            int def = ((MainWindow)Application.Current.MainWindow).def;
+            
             whoP = 0;
             inventP.Add(mec.CreateSword("mec", 10));
             inventP.Add(mec.CreateSword("novy mec", 20));
-            player = cr.InitialyPlayer(he.Health, he.Damage, he.Defense, he.Name, whoP, he.ClassP);
+            player = cr.InitialyPlayer(h, dam, def, name, whoP, classP);
             enemy = cr.InitialyEnemy(player);
             whoE = enemy.Who;
             Gb_attack_warrior.Visibility = Visibility.Hidden;
