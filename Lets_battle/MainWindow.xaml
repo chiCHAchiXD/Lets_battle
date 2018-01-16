@@ -5,26 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lets_battle"
         mc:Ignorable="d"
-        Title="Start" Height="300" Width="636">
+        Title="Start" Height="300" Width="296.305">
+    <!-- Default Width 296.305 -->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Label Content="                 Welcome to my Skyrim 2D" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="272"/>
-        <Button x:Name="B_start" Content="Start" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="137" Height="40" Click="B_start_Click"/>
-        <Button x:Name="B_settings" Content="Settings" HorizontalAlignment="Left" Margin="10,86,0,0" VerticalAlignment="Top" Width="272" Height="40" Click="B_settings_Click"/>
-        <Button x:Name="B_save" Content="Save" HorizontalAlignment="Left" Margin="10,131,0,0" VerticalAlignment="Top" Width="272" Height="40" Click="B_save_Click"/>
-        <Button x:Name="B_load" Content="Load" HorizontalAlignment="Left" Margin="10,176,0,0" VerticalAlignment="Top" Width="272" Height="40" Click="B_load_Click"/>
-        <Button x:Name="B_close" Content="Exit" HorizontalAlignment="Left" Margin="152,221,0,0" VerticalAlignment="Top" Width="130" Height="40" Click="B_close_Click"/>
-        <Button x:Name="B_author" Content="Author(s)" HorizontalAlignment="Left" Margin="10,221,0,0" VerticalAlignment="Top" Width="137" Height="40" Click="B_author_Click"/>
-        <Button x:Name="B_create_player" Content="New Player" HorizontalAlignment="Left" Margin="152,41,0,0" VerticalAlignment="Top" Width="130" Height="40" Click="B_new_player"/>
-
+        <Button x:Name="B_start" Content="Start" HorizontalAlignment="Left" Margin="6,41,0,0" VerticalAlignment="Top" Width="137" Height="40" Click="B_start_Click"/>
+        <Button x:Name="B_settings" Content="Settings" HorizontalAlignment="Left" Margin="6,86,0,0" VerticalAlignment="Top" Width="272" Height="40" Click="B_settings_Click"/>
+        <Button x:Name="B_save" Content="Save" HorizontalAlignment="Left" Margin="6,131,0,0" VerticalAlignment="Top" Width="272" Height="40" Click="B_save_Click"/>
+        <Button x:Name="B_load" Content="Load" HorizontalAlignment="Left" Margin="6,176,0,0" VerticalAlignment="Top" Width="272" Height="40" Click="B_load_Click"/>
+        <Button x:Name="B_close" Content="Exit" HorizontalAlignment="Left" Margin="148,221,0,0" VerticalAlignment="Top" Width="130" Height="40" Click="B_close_Click"/>
+        <Button x:Name="B_author" Content="Author(s)" HorizontalAlignment="Left" Margin="6,221,0,0" VerticalAlignment="Top" Width="137" Height="40" Click="B_author_Click"/>
+        <Button x:Name="B_create_player" Content="New Player" HorizontalAlignment="Left" Margin="148,41,0,0" VerticalAlignment="Top" Width="130" Height="40" Click="B_new_player"/>
+        
         <GroupBox x:Name="Gb_create_player" Header="Create Player" Height="249" Margin="287,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="334">
-            <Grid RenderTransformOrigin="0.5,0.5" Margin="0,0,-2,4">
+            <Grid RenderTransformOrigin="0.5,0.5" Margin="10,0,-12,4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-
                 <Button x:Name="b_readInput" Content="Write" HorizontalAlignment="Left" Margin="10,151,0,0" VerticalAlignment="Top" Width="306" Click="B_readInput_Click" Height="58"/>
                 <TextBox x:Name="tb_inputName" HorizontalAlignment="Left" Height="23" Margin="194,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                 <Label Content="Would you rather be: " HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
@@ -40,10 +40,18 @@
                 <Label Content="Damage: " HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top"/>
                 <Label Content="Defense: " HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top"/>
                 <Button Content="Generate Stats" HorizontalAlignment="Left" Margin="217,67,0,0" VerticalAlignment="Top" Width="99" Height="79" Click="Button_Click"/>
-
-
             </Grid>
         </GroupBox>
 
+        <GroupBox x:Name="Gb_load" Header="Load player" Height="249" Margin="287,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="334">
+            <Grid RenderTransformOrigin="0.5,0.5" Margin="10,0,-12,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="B_load_player" Content="Load" HorizontalAlignment="Left" Margin="237,10,0,0" VerticalAlignment="Top" Width="77" Height="36" Click="B_load_Click"/>
+                <ComboBox x:Name="Cb_choosed_character" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="222" Height="36"/>
+                <TextBox x:Name="Tb_saved_characters" HorizontalAlignment="Left" Height="162" Margin="10,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="304" IsEnabled="False"/>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>

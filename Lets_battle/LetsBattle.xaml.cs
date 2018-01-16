@@ -47,7 +47,10 @@ namespace Lets_battle
             int h = ((MainWindow)Application.Current.MainWindow).h;
             int dam = ((MainWindow)Application.Current.MainWindow).dam;
             int def = ((MainWindow)Application.Current.MainWindow).def;
+
             
+            
+
             whoP = 0;
             inventP.Add(mec.CreateSword("mec", 10));
             inventP.Add(mec.CreateSword("novy mec", 20));

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using LetsBattleBookCase;
+using System.IO;
 
 namespace Lets_battle
 {
@@ -32,6 +33,8 @@ namespace Lets_battle
             InitializeComponent();
 
             Gb_create_player.Visibility = Visibility.Collapsed;
+            Gb_load.Visibility = Visibility.Collapsed;
+           // Gb_settings.Visibility = Visibility.Collapsed;
         }
 
         private void B_start_Click(object sender, RoutedEventArgs e)
@@ -46,24 +49,29 @@ namespace Lets_battle
             Gb_create_player.Visibility = Visibility.Visible;
 
             //Help h = new Help();
-            var createPlayer = new CreatePlayer();
+            //var createPlayer = new CreatePlayer();
+
+            Width = 638;
             
-            createPlayer.ShowDialog(); //createPlayer Window will show when you run this program
+
+            //createPlayer.ShowDialog(); //createPlayer Window will show when you run this program
             /*
             h.ClassP = createPlayer.classP;
             h.Health = createPlayer.health;
             h.Name = createPlayer.name;
             h.Defense = createPlayer.defense;
-            */
+            
             name = createPlayer.he.Name;
             classP = createPlayer.he.ClassP;
             h = createPlayer.he.Health;
             dam = createPlayer.he.Damage;
             def = createPlayer.he.Defense;
+            */
         }
 
         public void B_readInput_Click(object sender, RoutedEventArgs e)
         {
+            /*
             he.Name = tb_inputName.Text;
             he.ClassP = cb_Class.SelectedIndex;
 
@@ -72,10 +80,20 @@ namespace Lets_battle
             he.Defense = Convert.ToInt32(tb_Defense.Text);
 
             Close();
+            */
+            
+            name = tb_inputName.Text;
+            classP = cb_Class.SelectedIndex;
+            h = Convert.ToInt32(tb_Health.Text);
+            dam = Convert.ToInt32(tb_Damage.Text);
+            def = Convert.ToInt32(tb_Defense.Text);
+            Gb_load.Visibility = Visibility.Collapsed;
+            Width = 293.826;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            
             he.ClassP = cb_Class.SelectedIndex;
             Dice dice = new Dice();
 
@@ -119,20 +137,49 @@ namespace Lets_battle
                     break;
             }
         }
-
+        
         private void B_settings_Click(object sender, RoutedEventArgs e)
         {
-            
+            Width = 638;
+            //Gb_settings.Visibility = Visibility.Visible;
         }
 
         private void B_save_Click(object sender, RoutedEventArgs e)
         {
+            StreamWriter sw = new StreamWriter("save.txt");
 
+            //sw.Write(DateTime.Now + "-" + name + "-" + classP + "-" + h + "-" + dam + "-" + def);
+            sw.Write(DateTime.Now + Environment.NewLine + name + Environment.NewLine + classP + Environment.NewLine + h + Environment.NewLine + dam + Environment.NewLine + def);
+
+            sw.Close();
         }
 
         private void B_load_Click(object sender, RoutedEventArgs e)
         {
+            Gb_load.Visibility = Visibility.Visible;
+            Gb_create_player.Visibility = Visibility.Collapsed;
+            Width = 638;
+            if ((sender as Button) == B_load)
+            {
+                int newLineCounter = 0;
+                var sr = new StreamReader("save.txt");
+                //List<string> line = new List<string>();
+                string[] line = new string[1];
+                while ((line[0] = sr.ReadLine()) != null)
+                {
+                    Tb_saved_characters.Text += line[0] + ", "; // + Environment.NewLine;
+                    if (newLineCounter == 1)
+                    {
+                        Cb_choosed_character.Items.Add(line[0]);
+                    }
+                    newLineCounter++;
+                }
+                sr.Close();
+            }
+            else if((sender as Button) == B_load_player)
+            {
 
+            }
         }
 
         private void B_author_Click(object sender, RoutedEventArgs e)
@@ -140,11 +187,6 @@ namespace Lets_battle
 
         }
 
-        private void B_close_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        
+        private void B_close_Click(object sender, RoutedEventArgs e) { Close(); }
     }
 }
