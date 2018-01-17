@@ -46,13 +46,16 @@ namespace Lets_battle
 
         private void B_new_player(object sender, RoutedEventArgs e)
         {
-            Gb_create_player.Visibility = Visibility.Visible;
+            
 
             //Help h = new Help();
             //var createPlayer = new CreatePlayer();
 
-            Width = 638;
-            
+            for (double i = 296.305; i < 638; i++)
+            {
+                Width = i;
+            }
+            Gb_create_player.Visibility = Visibility.Visible;
 
             //createPlayer.ShowDialog(); //createPlayer Window will show when you run this program
             /*
@@ -87,8 +90,13 @@ namespace Lets_battle
             h = Convert.ToInt32(tb_Health.Text);
             dam = Convert.ToInt32(tb_Damage.Text);
             def = Convert.ToInt32(tb_Defense.Text);
+            for (double i = 638; i > 296.305; i--)
+            {
+                Width = i;
+            }
             Gb_load.Visibility = Visibility.Collapsed;
-            Width = 293.826;
+            Gb_create_player.Visibility = Visibility.Collapsed;
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -140,37 +148,47 @@ namespace Lets_battle
         
         private void B_settings_Click(object sender, RoutedEventArgs e)
         {
-            Width = 638;
+            for (double i = 296.305; i < 638; i++)
+            {
+                Width = i;
+            }
             //Gb_settings.Visibility = Visibility.Visible;
         }
 
         private void B_save_Click(object sender, RoutedEventArgs e)
         {
-            StreamWriter sw = new StreamWriter("save.txt");
+            StreamWriter sw = new StreamWriter("save.txt", append: true);
 
             //sw.Write(DateTime.Now + "-" + name + "-" + classP + "-" + h + "-" + dam + "-" + def);
-            sw.Write(DateTime.Now + Environment.NewLine + name + Environment.NewLine + classP + Environment.NewLine + h + Environment.NewLine + dam + Environment.NewLine + def);
+            sw.Write(DateTime.Now + Environment.NewLine + name + Environment.NewLine + classP + Environment.NewLine + h + Environment.NewLine + dam + Environment.NewLine + def + Environment.NewLine);
 
             sw.Close();
         }
 
         private void B_load_Click(object sender, RoutedEventArgs e)
         {
+            
+
+            for (double i = 296.305; i < 638; i++)
+            {
+                Width = i;
+            }
             Gb_load.Visibility = Visibility.Visible;
             Gb_create_player.Visibility = Visibility.Collapsed;
-            Width = 638;
+            //Width = 638;
             if ((sender as Button) == B_load)
             {
+                int whereIsNextName = 1;
                 int newLineCounter = 0;
                 var sr = new StreamReader("save.txt");
-                //List<string> line = new List<string>();
                 string[] line = new string[1];
                 while ((line[0] = sr.ReadLine()) != null)
                 {
                     Tb_saved_characters.Text += line[0] + ", "; // + Environment.NewLine;
-                    if (newLineCounter == 1)
+                    if (newLineCounter == whereIsNextName)
                     {
                         Cb_choosed_character.Items.Add(line[0]);
+                        whereIsNextName += 6;
                     }
                     newLineCounter++;
                 }
@@ -179,6 +197,14 @@ namespace Lets_battle
             else if((sender as Button) == B_load_player)
             {
 
+
+                Gb_load.Visibility = Visibility.Collapsed;
+                Gb_create_player.Visibility = Visibility.Collapsed;
+
+                for (double i = 638; i > 296.305; i--)
+                {
+                    Width = i;
+                }
             }
         }
 
