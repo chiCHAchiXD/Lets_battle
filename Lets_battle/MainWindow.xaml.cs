@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using LetsBattleBookCase;
 using System.IO;
+using System.Windows.Threading;
 
 namespace Lets_battle
 {
@@ -34,9 +35,10 @@ namespace Lets_battle
 
             Gb_create_player.Visibility = Visibility.Collapsed;
             Gb_load.Visibility = Visibility.Collapsed;
-           // Gb_settings.Visibility = Visibility.Collapsed;
+            Gb_author.Visibility = Visibility.Collapsed;
+            // Gb_settings.Visibility = Visibility.Collapsed;
         }
-
+        
         private void B_start_Click(object sender, RoutedEventArgs e)
         {
             var letsBattleWindow = new LetsBattle();
@@ -46,57 +48,38 @@ namespace Lets_battle
 
         private void B_new_player(object sender, RoutedEventArgs e)
         {
-            
-
-            //Help h = new Help();
-            //var createPlayer = new CreatePlayer();
-
             for (double i = 296.305; i < 638; i++)
             {
                 Width = i;
             }
             Gb_create_player.Visibility = Visibility.Visible;
-
-            //createPlayer.ShowDialog(); //createPlayer Window will show when you run this program
-            /*
-            h.ClassP = createPlayer.classP;
-            h.Health = createPlayer.health;
-            h.Name = createPlayer.name;
-            h.Defense = createPlayer.defense;
-            
-            name = createPlayer.he.Name;
-            classP = createPlayer.he.ClassP;
-            h = createPlayer.he.Health;
-            dam = createPlayer.he.Damage;
-            def = createPlayer.he.Defense;
-            */
         }
 
         public void B_readInput_Click(object sender, RoutedEventArgs e)
         {
-            /*
-            he.Name = tb_inputName.Text;
-            he.ClassP = cb_Class.SelectedIndex;
-
-            he.Health = Convert.ToInt32(tb_Health.Text);
-            he.Damage = Convert.ToInt32(tb_Damage.Text);
-            he.Defense = Convert.ToInt32(tb_Defense.Text);
-
-            Close();
-            */
+            try
+            {
+                name = tb_inputName.Text;
+                classP = cb_Class.SelectedIndex;
+                h = Convert.ToInt32(tb_Health.Text);
+                dam = Convert.ToInt32(tb_Damage.Text);
+                def = Convert.ToInt32(tb_Defense.Text);
+            }
+            catch { }
             
-            name = tb_inputName.Text;
-            classP = cb_Class.SelectedIndex;
-            h = Convert.ToInt32(tb_Health.Text);
-            dam = Convert.ToInt32(tb_Damage.Text);
-            def = Convert.ToInt32(tb_Defense.Text);
+            tb_inputName.Text = null;
+            cb_Class.SelectedValue = -1;
+            tb_Health.Text = "";
+            tb_Damage.Text = "";
+            tb_Defense.Text = "";
+
             for (double i = 638; i > 296.305; i--)
             {
                 Width = i;
             }
+
             Gb_load.Visibility = Visibility.Collapsed;
             Gb_create_player.Visibility = Visibility.Collapsed;
-            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -158,17 +141,16 @@ namespace Lets_battle
         private void B_save_Click(object sender, RoutedEventArgs e)
         {
             StreamWriter sw = new StreamWriter("save.txt", append: true);
-
-            //sw.Write(DateTime.Now + "-" + name + "-" + classP + "-" + h + "-" + dam + "-" + def);
+            
             sw.Write(DateTime.Now + Environment.NewLine + name + Environment.NewLine + classP + Environment.NewLine + h + Environment.NewLine + dam + Environment.NewLine + def + Environment.NewLine);
+
+            MessageBox.Show("player "+ name + " was saved and you can load him anytime you want in load section");
 
             sw.Close();
         }
 
         private void B_load_Click(object sender, RoutedEventArgs e)
         {
-            
-
             for (double i = 296.305; i < 638; i++)
             {
                 Width = i;
@@ -179,28 +161,36 @@ namespace Lets_battle
             if ((sender as Button) == B_load)
             {
                 int whereIsNextName = 1;
+                int whereIsNextSave = 5;
                 int newLineCounter = 0;
                 var sr = new StreamReader("save.txt");
                 string[] line = new string[1];
                 while ((line[0] = sr.ReadLine()) != null)
                 {
-                    Tb_saved_characters.Text += line[0] + ", "; // + Environment.NewLine;
+                    Tb_saved_characters.Text += line[0] + ", ";
+
                     if (newLineCounter == whereIsNextName)
                     {
                         Cb_choosed_character.Items.Add(line[0]);
                         whereIsNextName += 6;
                     }
+
+                    if (newLineCounter == whereIsNextSave)
+                    {
+                        Tb_saved_characters.Text += Environment.NewLine;
+                        whereIsNextSave += 6;
+                    }
+
                     newLineCounter++;
                 }
                 sr.Close();
             }
+
             else if((sender as Button) == B_load_player)
             {
-
-
                 Gb_load.Visibility = Visibility.Collapsed;
                 Gb_create_player.Visibility = Visibility.Collapsed;
-
+                Gb_author.Visibility = Visibility.Collapsed;
                 for (double i = 638; i > 296.305; i--)
                 {
                     Width = i;
@@ -210,9 +200,69 @@ namespace Lets_battle
 
         private void B_author_Click(object sender, RoutedEventArgs e)
         {
+            Gb_load.Visibility = Visibility.Collapsed;
+            Gb_create_player.Visibility = Visibility.Collapsed;
+            Gb_author.Visibility = Visibility.Visible;
 
+            for (double i = 296.305; i < 638; i++)
+            {
+                Width = i;
+            }
         }
 
         private void B_close_Click(object sender, RoutedEventArgs e) { Close(); }
+        
+        private void B_delete_Click(object sender, RoutedEventArgs e)
+        {
+            //int removeEntry = Convert.ToInt32(Cb_choosed_character.SelectedValue.ToString());
+            
+            string removeEntry = Convert.ToString(Cb_choosed_character.SelectionBoxItem);
+            MessageBox.Show(removeEntry);
+
+            
+            var file = new List<string>(File.ReadAllLines("save.txt"));
+
+            var sr = new StreamReader("save.txt");
+            
+            string[] line = new string[1];
+            
+            while ((line[0] = sr.ReadLine()) != null)
+            {
+                /*if (line[0] != removeEntry)
+                {
+                    file += Convert.ToString(line[0]);
+                }
+                else sw.Write("ahoj");
+                sw.Close();
+                */
+                //File.WriteAllLines("save.txt", file.ToArray());
+            }
+            
+            //file.RemoveAt(removeEntry);
+            //File.WriteAllLines("save.txt", file.ToArray());
+
+           
+           // var sr = new StreamReader("save.txt");
+            var sw = new StreamWriter("save.txt", true);
+          //  string[] line = new string[1];
+
+            for (int i = 0; i < Tb_saved_characters.LineCount; i++)
+            {
+            }
+            
+        }
+
+        private void B_close_author(object sender, RoutedEventArgs e)
+        {
+        
+            Gb_load.Visibility = Visibility.Collapsed;
+            Gb_create_player.Visibility = Visibility.Collapsed;
+            Gb_author.Visibility = Visibility.Collapsed;
+            for (double i = 638; i > 296.305; i--)
+            {
+                Width = i;
+            }
+            
+        }
     }
 }
