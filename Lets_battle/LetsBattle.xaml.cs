@@ -42,15 +42,12 @@ namespace Lets_battle
         {
             //it must be on top!!
             InitializeComponent();
-            string name = ((MainWindow)Application.Current.MainWindow).name;
-            classP = ((MainWindow)Application.Current.MainWindow).classP;
-            int h = ((MainWindow)Application.Current.MainWindow).h;
-            int dam = ((MainWindow)Application.Current.MainWindow).dam;
-            int def = ((MainWindow)Application.Current.MainWindow).def;
-
+            string name = ((MainWindow)Application.Current.MainWindow).he.Name;
+            classP = ((MainWindow)Application.Current.MainWindow).he.ClassP;
+            int h = ((MainWindow)Application.Current.MainWindow).he.Health;
+            int dam = ((MainWindow)Application.Current.MainWindow).he.Damage;
+            int def = ((MainWindow)Application.Current.MainWindow).he.Defense;
             
-            
-
             whoP = 0;
             inventP.Add(mec.CreateSword("mec", 10));
             inventP.Add(mec.CreateSword("novy mec", 20));

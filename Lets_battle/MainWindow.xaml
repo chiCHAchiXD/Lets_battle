@@ -49,8 +49,10 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Button x:Name="B_delete_player" Content="Delete" HorizontalAlignment="Left" Margin="237,10,0,0" VerticalAlignment="Top" Width="77" Height="36" Click="B_delete_Click"/>
-                <ComboBox x:Name="Cb_choosed_character" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="140" Height="36"/>
-                <TextBox x:Name="Tb_saved_characters" HorizontalAlignment="Left" Height="162" Margin="10,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="304" IsEnabled="False"/>
+                <!--<ComboBox x:Name="Cb_choosed_character" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="140" Height="36"/>-->
+                <!--<ListBox x:Name="Tb_saved_characters" HorizontalAlignment="Left" Height="162" Margin="10,51,0,0" VerticalAlignment="Top" Width="304" IsEnabled="True"/> -->
+                <ListBox x:Name="Tb_saved_characters" HorizontalAlignment="Left" Height="162" Margin="10,51,0,0" VerticalAlignment="Top" Width="304" IsEnabled="True"/>
+                <!--<TextBox x:Name="Tb_saved_characters" HorizontalAlignment="Left" Height="162" Margin="10,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="304" IsEnabled="False"/>-->
                 <Button x:Name="B_load_player" Content="Load" HorizontalAlignment="Left" Margin="155,10,0,0" VerticalAlignment="Top" Width="77" Height="36" Click="B_load_Click"/>
             </Grid>
         </GroupBox>
