@@ -27,8 +27,8 @@ namespace Lets_battle
         public int h;
         public int dam;
         public int def;
-        public Help he = new Help();
-
+        bool clicked = false;
+        //static bool clicked = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -48,18 +48,34 @@ namespace Lets_battle
 
         private void B_new_player(object sender, RoutedEventArgs e)
         {
-            /*
-            for (double i = 296.305; i < 638; i++)
+            if (!clicked)
             {
-                Width = i;
+                clicked= true;
+                // Gb_settings.Visibility = Visibility.Collapsed;
+                Gb_load.Visibility = Visibility.Collapsed;
+                Gb_create_player.Visibility = Visibility.Collapsed;
+                Gb_author.Visibility = Visibility.Collapsed;
+
+                Gb_create_player.Visibility = Visibility.Visible;
+
+                Width = 638;
             }
-            */
-            Width = 638;
-            Gb_create_player.Visibility = Visibility.Visible;
+            else if(clicked)
+            {
+                Gb_load.Visibility = Visibility.Collapsed;
+                Gb_create_player.Visibility = Visibility.Collapsed;
+                Gb_author.Visibility = Visibility.Collapsed;
+
+                Gb_create_player.Visibility = Visibility.Collapsed;
+
+                Width = 296.305;
+                clicked = false;
+            }
         }
 
         public void B_readInput_Click(object sender, RoutedEventArgs e)
         {
+            /*
             try
             {
                 name = tb_inputName.Text;
@@ -69,7 +85,14 @@ namespace Lets_battle
                 def = Convert.ToInt32(tb_Defense.Text);
             }
             catch { }
-            
+            */
+
+            name = tb_inputName.Text;
+            classP = cb_Class.SelectedIndex;
+            h = Convert.ToInt32(tb_Health.Text);
+            dam = Convert.ToInt32(tb_Damage.Text);
+            def = Convert.ToInt32(tb_Defense.Text);
+
             tb_inputName.Text = null;
             cb_Class.SelectedValue = -1;
             tb_Health.Text = "";
@@ -85,12 +108,13 @@ namespace Lets_battle
             Width = 296.305;
             Gb_load.Visibility = Visibility.Collapsed;
             Gb_create_player.Visibility = Visibility.Collapsed;
+            Gb_author.Visibility = Visibility.Collapsed;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
-            he.ClassP = cb_Class.SelectedIndex;
+
+            classP = cb_Class.SelectedIndex;
             Dice dice = new Dice();
 
             int h = dice.DiceRoll(20);
@@ -113,7 +137,7 @@ namespace Lets_battle
 
             #endregion
 
-            switch (he.ClassP)
+            switch (classP)
             {
                 case 0:
                     if (tbH < 7 || tbDa < 10 || tbDe < 5)
@@ -136,99 +160,112 @@ namespace Lets_battle
         
         private void B_settings_Click(object sender, RoutedEventArgs e)
         {
-            /*
-            for (double i = 296.305; i < 638; i++)
+            if (!clicked)
             {
-                Width = i;
+                clicked = true;
+                Width = 638;
+                // Gb_settings.Visibility = Visibility.Visible;
+                Gb_load.Visibility = Visibility.Collapsed;
+                Gb_create_player.Visibility = Visibility.Collapsed;
+                Gb_author.Visibility = Visibility.Collapsed;
+                Gb_author.Visibility = Visibility.Collapsed;
             }
-            */
-            Width = 638;
-            //Gb_settings.Visibility = Visibility.Visible;
+
+            else if (clicked)
+            {
+                Width = 296.305;
+                Gb_load.Visibility = Visibility.Collapsed;
+                Gb_create_player.Visibility = Visibility.Collapsed;
+                Gb_author.Visibility = Visibility.Collapsed;
+                Gb_author.Visibility = Visibility.Collapsed;
+                clicked = false;
+            }
         }
 
         private void B_save_Click(object sender, RoutedEventArgs e)
         {
             StreamWriter sw = new StreamWriter("save.txt", append: true);
 
-            sw.Write(DateTime.Now + Environment.NewLine + name + Environment.NewLine + classP + Environment.NewLine + h + Environment.NewLine + dam + Environment.NewLine + def + Environment.NewLine);
-           //sw.Write(DateTime.Now + ", " + name + ", " + classP + ", " + h + ", " + dam + ", " + def + Environment.NewLine);
+            //sw.Write(DateTime.Now + Environment.NewLine + name + Environment.NewLine + classP + Environment.NewLine + h + Environment.NewLine + dam + Environment.NewLine + def + Environment.NewLine);
+           sw.Write(DateTime.Now + ", " + name + ", " + classP + ", " + h + ", " + dam + ", " + def + Environment.NewLine);
 
             MessageBox.Show("player "+ name + " was saved and you can load him anytime you want in load section");
 
             sw.Close();
         }
-
+        
         private void B_load_Click(object sender, RoutedEventArgs e)
         {
-            Width = 638;
-            Gb_load.Visibility = Visibility.Visible;
-            Gb_create_player.Visibility = Visibility.Collapsed;
-            //Width = 638;
-            if ((sender as Button) == B_load)
+            if (!clicked)
             {
-                B_load.IsEnabled = false;
-                int whereIsNextName = 1;
-                int whereIsNextSave = 5;
-                int newLineCounter = 0;
-                var sr = new StreamReader("save.txt");
-                string[] line = new string[1];
-                while ((line[0] = sr.ReadLine()) != null)
+                Tb_saved_characters.Items.Clear();
+                clicked = true;
+                Width = 638;
+                Gb_load.Visibility = Visibility.Visible;
+                Gb_create_player.Visibility = Visibility.Collapsed;
+                Gb_author.Visibility = Visibility.Collapsed;
+
+                if ((sender as Button) == B_load)
                 {
-                    //Tb_saved_characters.Items.Add(line[0] + ",");
-                    
-                    if (newLineCounter == whereIsNextName)
+                    int whereIsNextSave = 5;
+                    int newLineCounter = 0;
+                    var sr = new StreamReader("save.txt");
+                    string[] line = new string[1];
+                    while ((line[0] = sr.ReadLine()) != null)
                     {
-                        Tb_saved_characters.Items.Add(line[0]);
-                        whereIsNextName += 6;
-                    }
-                    
-                    if (newLineCounter == whereIsNextSave)
-                    {
-                        Tb_saved_characters.Items.Add(Environment.NewLine);
-                        whereIsNextSave += 6;
-                    }
+                        Tb_saved_characters.Items.Add(line[0] + ",");
 
-                    newLineCounter++;
+                        /*if (newLineCounter == whereIsNextName)
+                        {
+                            Tb_saved_characters.Items.Add(line[0]);
+                            whereIsNextName += 6;
+                        }
+                        */
+                        if (newLineCounter == whereIsNextSave)
+                        {
+                            Tb_saved_characters.Items.Add(Environment.NewLine);
+                            whereIsNextSave += 6;
+                        }
+
+                        newLineCounter++;
+                    }
+                    sr.Close();
                 }
-                sr.Close();
-            }
 
-            else if((sender as Button) == B_load_player)
+                else if ((sender as Button) == B_load_player)
+                {
+                    B_load.IsEnabled = true;
+                    Gb_load.Visibility = Visibility.Collapsed;
+                    Gb_create_player.Visibility = Visibility.Collapsed;
+                    Gb_author.Visibility = Visibility.Collapsed;
+                    Width = 296.305;
+
+                    string[] arr = new string[10];
+                    for (int i = 0; i < Tb_saved_characters.SelectedItems.Count; i++)
+                    {
+                        //arr[i] = Tb_saved_characters.SelectedItems[i].ToString();
+                        string record = Tb_saved_characters.Items[Tb_saved_characters.SelectedIndex].ToString();
+                        arr = record.Split(',');
+                    }
+
+                    name = arr[1];
+                    classP = Convert.ToInt32(arr[2]);
+                    h = Convert.ToInt32(arr[3]);
+                    dam = Convert.ToInt32(arr[4]);
+                    def = Convert.ToInt32(arr[5]);
+                    /*
+                    String text = name + "; " + classP + "; " + h + "; " + dam +"; "+ def;
+                    MessageBox.Show(text);
+                    */
+                }
+            }
+            else if(clicked)
             {
-                B_load.IsEnabled = true;
+                Width = 296.305;
                 Gb_load.Visibility = Visibility.Collapsed;
                 Gb_create_player.Visibility = Visibility.Collapsed;
                 Gb_author.Visibility = Visibility.Collapsed;
-                Width = 296.305;
-                /*
-                var arr = new List<string>();
-                foreach (var selected in Tb_saved_characters.SelectedItems)
-                {
-                    arr.Add(selected.ToString());
-                }
-
-                string finalStr = "some text before the values" + String.Join(", ", arr);
-                */
-
-                /*string[] arr = new string[10];
-                for (int i = 0; i < Tb_saved_characters.SelectedItems.Count; i++)
-                {
-                    //arr[i] = Tb_saved_characters.SelectedItems[i].ToString();
-                    arr[i] = Tb_saved_characters.SelectedItems.ToString().Trim(',');
-                }
-                */
-                /*
-                he.Name = arr[1];
-                he.ClassP = Convert.ToInt32(arr[2]);
-                he.Health = Convert.ToInt32(arr[3]);
-                he.Damage= Convert.ToInt32(arr[4]);
-                he.Defense = Convert.ToInt32(arr[5]);
-                */
-                //MessageBox.Show(arr[0]);
-
-                //MessageBox.Show(he.Name + he.ClassP + he.Health + he.Damage + he.Defense);
-
-                //MessageBox.Show(name + classP + h + dam + def);
+                clicked = false;
             }
         }
 
@@ -249,38 +286,17 @@ namespace Lets_battle
         private void B_close_Click(object sender, RoutedEventArgs e) { Close(); }
         
         private void B_delete_Click(object sender, RoutedEventArgs e)
-        {
-            //int removeEntry = Convert.ToInt32(Cb_choosed_character.SelectedValue.ToString());
+        {             
+            StreamWriter sw = new StreamWriter("save.txt");
             
-           // string removeEntry = Convert.ToString(Cb_choosed_character.SelectionBoxItem);
-           // MessageBox.Show(removeEntry);
-
-            
-            var file = new List<string>(File.ReadAllLines("save.txt"));
-
-            var sr = new StreamReader("save.txt");
-            
-            string[] line = new string[1];
-            
-            while ((line[0] = sr.ReadLine()) != null)
+            Tb_saved_characters.Items.RemoveAt(Tb_saved_characters.SelectedIndex);
+            string record = "";
+            for (int i = 0; i < Tb_saved_characters.Items.Count; i++)
             {
-                /*if (line[0] != removeEntry)
-                {
-                    file += Convert.ToString(line[0]);
-                }
-                else sw.Write("ahoj");
-                sw.Close();
-                */
-                //File.WriteAllLines("save.txt", file.ToArray());
+                record += Tb_saved_characters.Items[i].ToString() + Environment.NewLine;
             }
-            
-            //file.RemoveAt(removeEntry);
-            //File.WriteAllLines("save.txt", file.ToArray());
-
-           
-           // var sr = new StreamReader("save.txt");
-            var sw = new StreamWriter("save.txt", true);
-          //  string[] line = new string[1];
+            sw.Write(record);
+            sw.Close();
 
         }
 

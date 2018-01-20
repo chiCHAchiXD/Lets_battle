@@ -268,26 +268,20 @@ namespace LetsBattleBookCase
 
     public class Help
     {
-        public string name;
-        public int classP;
-        public int h;
-        public int dam;
-        public int def;
-        /*
-        public Help(string nme, int clasP, int he, int dama, int defe)
-        {
-            name = nme;
-            classP = clasP;
-            h = he;
-            dam = dama;
-            def = defe;
-        }
-        */
+        string name;
+        int classP;
+        int h;
+        int dam;
+        int def;
+        bool clicked = false;
+
+
         public string Name { get { return name; } set { name = value; } }
         public int ClassP { get { return classP; } set { classP = value; } }
         public int Health { get { return h; } set { h = value; } }
         public int Damage { get { return dam; } set { dam = value; } }
         public int Defense { get { return def; } set { def = value; } }
+        public bool Clicked { get { return clicked; } set { clicked = value; } }
     }
 
     public class GameArena
