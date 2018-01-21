@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace LetsBattleBookCase
 {
 #region classCreation
@@ -19,9 +18,7 @@ namespace LetsBattleBookCase
         protected int actionpts;
         Dice dice = new Dice();
 #endregion
-
         public Character() { }
-
         public Character(int h, int da, int de, string na, int wh)
         {
             health = h;
@@ -32,7 +29,6 @@ namespace LetsBattleBookCase
             level = 1;
             actionpts = 5;
         }
-
 #region getAndSet
         public int Health { get { return health; } set { health = value; } }
         public int Damage { get { return damage; } set { damage = value; } }
@@ -42,9 +38,7 @@ namespace LetsBattleBookCase
         public string Name { get { return name; } set { name = value; } }
         public int ActionPoint { get { return actionpts; } set { actionpts = value; } }
 #endregion
-
         public int Fight(Character attackedOn, int dmg) { return attackedOn.DamageDealt(attackedOn, dmg); }
-
         private int DamageDealt(Character attackedOn, int dmg)
         {
             int damageDealt = dice.DiceRoll(dmg) - dice.DiceRoll(attackedOn.Defense);
@@ -52,11 +46,8 @@ namespace LetsBattleBookCase
             attackedOn.MinusHealth(damageDealt);
             return damageDealt;
         }
-
         public bool IsAlive() { return (health > 0); }
-
         protected void MinusHealth(int dmg) { health -= dmg; }
-
         public void LevelIncrease()
         {
             level++;
@@ -65,76 +56,44 @@ namespace LetsBattleBookCase
             defense += 5;
             actionpts += 2;
         }
-
         //lets get some stats, 1todo get usefull!!!!!!!
         public void LevelStat(Character attacker) { int livelo = attacker.Level; }
     }
-
     public abstract class Player : Character
     {
         public Player() { }
-
         public Player(int h, int da, int de, string na, int wh) : base(h, da, de, na, wh) { }
-        
 #region virtualMethods
         public virtual int FireBall() { return 0; }
         public virtual int IceBall() { return 0; }
-
         public virtual int LightAttack(int damageOfItem) { return 0; }
         public virtual int HeavyAttack(int damageOfItem) { return 0; }
-
         public virtual int LightAttack() { return 0; }
         public virtual int HeavyAttack() { return 0; }
 #endregion
     }
-
     public class Mage : Player
     {
         Dice dice = new Dice();
         public Mage(int h, int da, int de, string na, int wh) : base(h, da, de, na, wh) { }
-
-        public override int FireBall()
-        {
-            int damage = dice.DiceRoll(Damage) + 1;
-            return damage;
-        }
-
-        public override int IceBall()
-        {
-            int damage = dice.DiceRoll(Damage) + 2;
-            return damage;
-        }
+        public override int FireBall() { return dice.DiceRoll(Damage) + 1; }
+        public override int IceBall() { return dice.DiceRoll(Damage) + 2; }
     }
-
     public class Warrior : Player
     {
         Dice dice = new Dice();
         public Warrior(int h, int da, int de, string na, int wh) : base(h, da, de, na, wh) { }
-
-        public override int HeavyAttack(int damageOfItem)
-        {
-            int damage = dice.DiceRoll(damageOfItem) + 3;
-            return damage;
-        }
-
-        public override int LightAttack(int damageOfItem)
-        {
-            int damage = dice.DiceRoll(damageOfItem) + 1;
-            return damage;
-        }
+        public override int HeavyAttack(int damageOfItem) { return dice.DiceRoll(damageOfItem) + 3; }
+        public override int LightAttack(int damageOfItem) { return dice.DiceRoll(damageOfItem) + 1; }
     }
-
     public class Creation
     {
         Dice dice = new Dice();
         public Player InitialyPlayer(int h, int dam, int def, string name, int whoP, int classP)
         {
             Dice dice = new Dice();
-
             int roll = dice.DiceRoll();
-
             Player returnPlayer = null;
-
             switch (classP)
             {
                 case 0: // warrior
@@ -152,9 +111,7 @@ namespace LetsBattleBookCase
                     returnPlayer = new Mage(h, dam, def, name, whoP);
                     break;
             }
-
             return returnPlayer;
-
             /*
 
             if (roll % 2 == 0) //if sude 
@@ -165,23 +122,18 @@ namespace LetsBattleBookCase
             inventoryListEnemy.Add(inventoryEnemy);
             */
         }
-
         public Player InitialyEnemy(Character player)
         {
             int whoE = 1;
             Player returnEnemy = null;
-
             returnEnemy = ChooseOfEnemy(whoE, player); // creation of enemy
-
             return returnEnemy;
         }
-
         public Player NextEnemy(int whoE, Character player)
         {
             Player returnEnemy = ChooseOfEnemy(whoE, player);
             return returnEnemy;
         }
-
         protected Player ChooseOfEnemy(int whoE, Character player)
         {
             Player returnEnemy = null;
@@ -195,44 +147,32 @@ namespace LetsBattleBookCase
         
     }
 #endregion
-
 #region inventory
-
     public abstract class Inventory
     {
         //public List<Item> inventory = new List<Item>();
-
         //public List<Item> Invent { get { return inventory; } }
-
         public string GetInventory(List<Weapon> inventory)
         {
             string a = "";
             foreach (Weapon i in inventory) a += i + Environment.NewLine;
             return a;
         }
-
         public virtual string WeaponInfo(List<Inventory> inventory) { return ""; }
-
         public virtual Weapon CreateSword(string name, int damage) { return null; }
-        
     }
-
     public class Weapon : Inventory
     {
         protected string nameOfItem;
         protected int damageOfItem;
-        
         public Weapon() { }
-        
         public Weapon(string nme, int dmg)
         {
             nameOfItem = nme;
             damageOfItem = dmg;
         }
-
         public string ItemName { get { return nameOfItem; } set { nameOfItem = value; } }
         public int ItemDamage { get { return damageOfItem; } set { damageOfItem = value; } }
-
         public override string WeaponInfo(List<Inventory> inventory)
         {
             string a = "";
@@ -243,54 +183,50 @@ namespace LetsBattleBookCase
             //return Convert.ToString(ItemName + " " + ItemDamage);
             return a;
         }
-
         public override Weapon CreateSword(string name, int damage)
         {
             Weapon item = new Sword(name, damage, 10);
             return item;
         }
     }
-
 #region items
-
     class Sword : Weapon
     {
         int sharpness = 0;
-
         public Sword(string nme, int dmg, int sness) : base(nme,dmg) { sharpness = sness; }
-
         public int GetSwordSharpness() { return sharpness; }
     }
-
 #endregion
-
 #endregion
-
     public class Help
     {
+        /*
         string name;
         int classP;
         int h;
         int dam;
         int def;
         bool clicked = false;
-
-
         public string Name { get { return name; } set { name = value; } }
         public int ClassP { get { return classP; } set { classP = value; } }
         public int Health { get { return h; } set { h = value; } }
         public int Damage { get { return dam; } set { dam = value; } }
         public int Defense { get { return def; } set { def = value; } }
         public bool Clicked { get { return clicked; } set { clicked = value; } }
+        */
+        public string Name { get; set; }
+        public int ClassP { get; set;  }
+        public int Health { get; set;  }
+        public int Damage { get; set;  }
+        public int Defense { get; set; }
+        public bool Clicked { get; set; }
     }
-
     public class GameArena
     {
         public int wIP;
         public int wIE;
         public int arenaSize;
         public char[] gameArena;
-
         public GameArena(int size, int whereIsPlayer, int whereIsEnemy)
         {
             arenaSize = size;
@@ -301,11 +237,9 @@ namespace LetsBattleBookCase
             gameArena[whereIsPlayer] = 'P';
             gameArena[whereIsEnemy] = 'E';
         }
-
         public int WIP { get { return wIP; } set { wIP = value; } }
         public int WIE { get { return wIE; } set { wIE = value; } }
         public int Length { get { return arenaSize; } }
-
         //it returns whole 2D arena
         public string GetGameArenaLook()
         {
@@ -317,11 +251,9 @@ namespace LetsBattleBookCase
             }
             return a;
         }
-
         public int GetWhereIsWho(Character a)
         {
             int where = 0;
-
             switch (a.Who)
             {
                 //Player
@@ -333,10 +265,8 @@ namespace LetsBattleBookCase
                     where = wIE;
                     break;
             }
-
             return where;
         }
-
         public char[] FillArena()
         {
             //fill whole field with #
@@ -346,34 +276,92 @@ namespace LetsBattleBookCase
             }
             //where if enemy write char E
             gameArena[WIP] = 'E';
-
             //where if player write char P
             gameArena[WIE] = 'P';
             return gameArena;
         }
-
         public void Move(Character a, int where)
         {
             switch (a.Who)
             {
                 case 0:
-                    int p = wIP + where;
+                    int p = WIP + where;
                     try
                     {
-                        if (wIP > 1 || wIP < Length - 1)
+                        /*
+                        //if player is before or behind enemy
+                        if (WIP == WIE - 1 || WIP == WIE + 1)
+                        {
+                            //before
+                            if (WIP == WIE - 1 && WIE == gameArena[gameArena.Length])
+                            {
+                                
+                                if (WIE + 1 < gameArena[gameArena.Length - 1]) 
+                                {
+                                    gameArena[WIE - 1] = '#';
+                                    gameArena[WIE + 1] = 'P';
+                                    WIP = WIE + 1;
+                                }
+                                else
+                                {
+                                    gameArena[WIE + 1] = '#';
+                                    gameArena[WIE - 1] = 'P';
+                                    WIP = WIE - 1;
+                                }
+                                gameArena[WIE - 1] = 'P';
+                                WIP = WIE - 1;
+                            }
+                            else
+                            {
+                                gameArena[WIE - 1] = '#';
+                                gameArena[WIE + 1] = 'P';
+                                WIP = WIE + 1;
+                            }
+                            //behind
+                            if (WIP == WIE + 1 && WIE != gameArena[0])
+                            
+                                else if (WIP == WIE + 1)
+                                {
+                                    if (WIE - 1 > gameArena[0])
+                                    {
+                                        gameArena[WIE + 1] = '#';
+                                        gameArena[WIE - 1] = 'P';
+                                        WIP = WIE - 1;
+                                    }
+                                    else
+                                    {
+                                        gameArena[WIE - 1] = '#';
+                                        gameArena[WIE + 1] = 'P';
+                                        WIP = WIE + 1;
+                                    }
+                                gameArena[WIE + 1] = 'P';
+                                WIP = WIE + 1;
+                            }
+                            else
+                            {
+                                gameArena[WIE + 1] = '#';
+                                gameArena[WIE - 1] = 'P';
+                                WIP = WIE - 1;
+                            }
+                        }
+                        */
+                        //if player wants move before or behind the enemy
+                        if (p < WIE || p > WIE)
                         {
                             gameArena[WIP] = '#';
                             gameArena[p] = 'P';
-                            wIP = p;
+                            WIP = p;
                         }
                     }
                     catch
                     {
+                        //if plazer is on right side
                         if (wIP == 0)
                         {
                             gameArena[0] = 'P';
                             wIP = 0;
                         }
+                        //if plazer is on left side
                         else if (wIP == gameArena.Length - 1)
                         {
                             gameArena[gameArena.Length - 1] = 'P';
@@ -386,38 +374,55 @@ namespace LetsBattleBookCase
                     int e = wIE + where;
                     try
                     {
-                        if (wIE > 1 || wIE < gameArena.Length - 1)
+                        if (WIE == WIP - 1 || WIE == WIP + 1)
                         {
-                            gameArena[GetWhereIsWho(a)] = '#';
+                            if (WIE == WIP - 1)
+                            {
+                                gameArena[WIP - 1] = '#';
+                                gameArena[WIP + 1] = 'E';
+                                WIE = WIP + 1;
+
+                            }
+
+                            else if (WIE == WIP + 1)
+                            {
+                                gameArena[WIP + 1] = '#';
+                                gameArena[WIP - 1] = 'E';
+                                WIP = WIP - 1;
+                            }
+
+                        }
+                        if (e < WIP || e > WIP)
+                        {
+                            gameArena[WIP] = '#';
                             gameArena[e] = 'E';
-                            wIP = e;
+                            WIE = e;
                         }
                     }
                     catch
                     {
-                        if (wIE == 0)
+
+                        if (WIE == 0)
                         {
                             gameArena[0] = 'E';
-                            wIP = 0;
+                            WIE = 0;
                         }
-                        else if (wIE == gameArena.Length - 1)
+                        else if (WIE == gameArena.Length - 1)
                         {
                             gameArena[gameArena.Length - 1] = 'E';
-                            wIP = gameArena.Length - 1;
+                            WIE = gameArena.Length - 1;
                         }
+
                     }
                     break;
             }
         }
     }
-
     public class Dice
     {
         Random rnd = new Random();
         public Dice() { }
-
         public int DiceRoll() { return rnd.Next() + 1; }
-
         public int DiceRoll(int max) { return rnd.Next(max) + 1; }
     }
 }
