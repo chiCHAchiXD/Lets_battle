@@ -260,44 +260,48 @@ namespace Lets_battle
         }
         #endregion
 #region buttons
-        private void B_fight_Click(object sender, RoutedEventArgs e)
+
+        private void B_click(object sender, RoutedEventArgs e)
         {
-            switch (classP)
+            if ((sender as Button) == B_fight)
             {
-                case 0:
-                    /*
-                    HowShouldEveryoneAttack(1);
-                    GetInformLb(4);
-                    */
-                    Gb_attack_mage.Visibility = Visibility.Hidden;
-                    Gb_attack_warrior.Visibility = Visibility.Visible;
-                    break;
-                case 1:
-                    /*
-                    HowShouldEveryoneAttack(1);
-                    GetInformLb(4);
-                    */
-                    Gb_attack_warrior.Visibility = Visibility.Hidden;
-                    Gb_attack_mage.Visibility = Visibility.Visible;
-                    break;
+                switch (classP)
+                {
+                    case 0:
+                        /*
+                        HowShouldEveryoneAttack(1);
+                        GetInformLb(4);
+                        */
+                        Gb_attack_mage.Visibility = Visibility.Hidden;
+                        Gb_attack_warrior.Visibility = Visibility.Visible;
+                        break;
+                    case 1:
+                        /*
+                        HowShouldEveryoneAttack(1);
+                        GetInformLb(4);
+                        */
+                        Gb_attack_warrior.Visibility = Visibility.Hidden;
+                        Gb_attack_mage.Visibility = Visibility.Visible;
+                        break;
+                }
             }
-            
-        }
-        private void B_inventory_Click(object sender, RoutedEventArgs e) { GetInformTb(mec.WeaponInfo(inventP)); }
-        private void B_transfer_Click(object sender, RoutedEventArgs e)
-        {
-            if ((sender as Button) == B_go_left)
+
+            else if ((sender as Button) == B_inventory) { GetInformTb(mec.WeaponInfo(inventP)); }
+
+            else if ((sender as Button) == B_go_left)
             {
                 GetInformLb(3);
                 gA.Move(player, -1);
                 GetInformLb(3);
             }
+
             else if ((sender as Button) == B_go_right)
             {
                 GetInformLb(3);
                 gA.Move(player, +1);
                 GetInformLb(3);
             }
+
         }
         private void Key_pressed(object sender, KeyEventArgs e)
         {
@@ -307,6 +311,7 @@ namespace Lets_battle
                 gA.Move(player, -1);
                 GetInformLb(3);
             }
+
             else if (e.Key == Key.Right)
             {
                 GetInformLb(3);
