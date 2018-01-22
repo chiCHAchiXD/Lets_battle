@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace LetsBattleBookCase
 {
-#region classCreation
+#region characters
     public class Character
     {
 #region variables
@@ -72,6 +72,8 @@ namespace LetsBattleBookCase
         public virtual int HeavyAttack() { return 0; }
 #endregion
     }
+
+#region classes
     public class Mage : Player
     {
         Dice dice = new Dice();
@@ -86,6 +88,8 @@ namespace LetsBattleBookCase
         public override int HeavyAttack(int damageOfItem) { return dice.DiceRoll(damageOfItem) + 3; }
         public override int LightAttack(int damageOfItem) { return dice.DiceRoll(damageOfItem) + 1; }
     }
+    #endregion
+
     public class Creation
     {
         Dice dice = new Dice();
@@ -147,6 +151,7 @@ namespace LetsBattleBookCase
         
     }
 #endregion
+
 #region inventory
     public abstract class Inventory
     {
@@ -198,6 +203,7 @@ namespace LetsBattleBookCase
     }
 #endregion
 #endregion
+
     public class Help
     {
         /*
