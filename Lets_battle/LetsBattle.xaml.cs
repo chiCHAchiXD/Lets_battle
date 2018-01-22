@@ -69,14 +69,18 @@ namespace Lets_battle
             }
             Tb_get_informed.ScrollToEnd();
         }
+
         public void GetInformTb(string whateverYouWant)
         {
             Tb_get_informed.Text += whateverYouWant + Environment.NewLine;
             Tb_get_informed.Text += "-------------------------------------" + Environment.NewLine;
             Tb_get_informed.ScrollToEnd();
         }
+
         public void GetInformMb(string who, string toWho, string withWhat, int howMuch) { MessageBox.Show(who + " attacked on " + toWho + " with " + withWhat + " for " + howMuch + " damage!"); }
+
         public void GetInformMb(string whateverYouWant) { MessageBox.Show(whateverYouWant); }
+
         public void GetInformLb(int choice)
         {
             switch (choice)
@@ -127,10 +131,13 @@ namespace Lets_battle
                     L_enemyDefense.Content = enemy.Defense;
                     //arena
                     L_arena.Content = gA.GetGameArenaLook();
+                    L_action_pts.Content = player.ActionPoint;
                     break;
             }
         }
+
 #endregion
+
 #region Ai
         public void WhoDied()
         {
@@ -157,34 +164,45 @@ namespace Lets_battle
             }
 
         }
+
         public void HowToEnemy()
         {
             string enemyM = Convert.ToString(enemy.Name);
             string playerM = Convert.ToString(player.Name);
+
             if (enemy is Mage)
             {
+               
+
                 int attack0 = enemy.FireBall();
                 int attack1 = enemy.IceBall();
+
                 if (attack1 > attack0)
                 {
                     int a = enemy.Fight(player, attack1);
                     GetInformTb(enemyM, "FireBall", a);
                 } 
+
                 else
                 {
                     int a = enemy.Fight(player, attack0);
                     GetInformTb(enemyM, "IceBall", a);
                 }
             }
+
             else if (enemy is Warrior)
             {
+                gA.Move(enemy, 1);
+
                 int attack0 = enemy.LightAttack(10);
                 int attack1 = enemy.HeavyAttack(10);
+
                 if (attack1 > attack0)
                 {
                     int a = enemy.Fight(player, attack1);
                     GetInformTb(enemyM, "Heavy Attack", a);
                 }
+
                 else
                 {
                     int a = enemy.Fight(player, attack0);
@@ -192,6 +210,7 @@ namespace Lets_battle
                 }
             }
         }
+
         public void HowToPlayer(int B_number)
         {
             if (player is Mage)
@@ -208,6 +227,7 @@ namespace Lets_battle
                         break;
                 }
             }
+
             else if (player is Warrior)
             {
                 switch (B_number)
@@ -225,25 +245,42 @@ namespace Lets_battle
                 }
             }
         }
+
         public void HowShouldEveryoneAttack(int B_number)
         {
+            /*
             Dice dice = new Dice();
             int whoWillAttackFirst = dice.DiceRoll();
             int whoAttacked;
+            */
+            if (player.HasActionPts())
+            {
+                HowToPlayer(B_number);
+            }
+
             //if sude player first attack
-            if (whoWillAttackFirst % 2 == 0)
+            /*if (whoWillAttackFirst % 2 == 0)
             {
                 HowToPlayer(B_number);
                 whoAttacked = 0;
             }
+            */
             //if sude enemyfirst attack
+            if (enemy.HasActionPts())
+            {
+                HowToEnemy();
+            }
+
+            /*
             else
             {
                 HowToEnemy();
                 whoAttacked = 1;
             }
-            GetInformLb(4);
+            */
+            GetInformLb(7);
             //based on whoattacked the other one will be next
+            /*
             switch (whoAttacked)
             {
                 //enemy
@@ -255,10 +292,18 @@ namespace Lets_battle
                     HowToPlayer(B_number);
                     break;
             }
-            GetInformLb(4);
+            */
+            GetInformLb(7);
+            
+            //player.ActionPoint++;
+           
             if (!player.IsAlive() || !enemy.IsAlive()) WhoDied();
+
+            GetInformLb(7);
         }
+        
         #endregion
+
 #region buttons
 
         private void B_click(object sender, RoutedEventArgs e)
@@ -290,25 +335,31 @@ namespace Lets_battle
 
             else if ((sender as Button) == B_go_left)
             {
+
                 GetInformLb(3);
                 gA.Move(player, -1);
+                gA.Move(enemy, 1);
                 GetInformLb(3);
+                
             }
 
             else if ((sender as Button) == B_go_right)
             {
                 GetInformLb(3);
                 gA.Move(player, +1);
+                gA.Move(enemy, -1);
                 GetInformLb(3);
             }
 
         }
+
         private void Key_pressed(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Left)
             {
                 GetInformLb(3);
                 gA.Move(player, -1);
+                gA.Move(enemy, 1);
                 GetInformLb(3);
             }
 
@@ -316,9 +367,11 @@ namespace Lets_battle
             {
                 GetInformLb(3);
                 gA.Move(player, +1);
+                gA.Move(enemy, -1);
                 GetInformLb(3);
             }
         }
+
         private void B_attack_Click(object sender, RoutedEventArgs e)
         {
             switch (classP)

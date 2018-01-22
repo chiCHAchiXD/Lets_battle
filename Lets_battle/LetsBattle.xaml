@@ -73,5 +73,7 @@
             </Grid>
 
         </GroupBox>
+        <Label Content="Action points: " HorizontalAlignment="Left" Margin="346,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="L_action_pts" Content="" HorizontalAlignment="Left" Margin="435,10,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

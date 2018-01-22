@@ -254,6 +254,7 @@ namespace Lets_battle
             else if ((sender as Button) == B_random_stats) { RandomStat(); }
             
             #endregion
+
 #region load/save_player
             else if ((sender as Button) == B_save) { Save(); }
             
@@ -264,15 +265,17 @@ namespace Lets_battle
             else if ((sender as Button) == B_delete_player) { DeletePlayer(); }
            
             #endregion
+
 #region author
             else if ((sender as Button) == B_author) { OpenAuthor(); }
             
             else if ((sender as Button) == B_author_close) { CloseAuthor(); }
             
             #endregion
+
             else if ((sender as Button) == B_settings) { OpenSettings(); }
             
-            else if ((sender as Button) == B_close) { Close(); }
+            else if ((sender as Button) == B_close) { Hide(); /*Close();*/ }
         }
     }
 }
