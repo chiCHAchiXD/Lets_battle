@@ -75,6 +75,7 @@ namespace LetsBattleBookCase
         public Player(int h, int da, int de, string na, int wh) : base(h, da, de, na, wh) { }
 
 #region virtualMethods
+
         public virtual int FireBall() { return 0; }
         public virtual int IceBall() { return 0; }
 
@@ -83,6 +84,7 @@ namespace LetsBattleBookCase
 
         public virtual int LightAttack() { return 0; }
         public virtual int HeavyAttack() { return 0; }
+
 #endregion
 
     }
