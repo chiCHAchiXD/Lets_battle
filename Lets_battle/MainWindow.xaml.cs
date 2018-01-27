@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using LetsBattleBookCase;
 using System.IO;
 using System.Windows.Threading;
+
 namespace Lets_battle
 {
     public partial class MainWindow : Window
@@ -26,7 +27,10 @@ namespace Lets_battle
         public int h;
         public int dam;
         public int def;
+
         public Help help = new Help();
+
+        public MainWindowMethods mainWindow = new MainWindowMethods();
 
         #endregion
 
@@ -40,32 +44,41 @@ namespace Lets_battle
         }
 
 #region methods
+
         private void Start()
         {
+
             var letsBattleWindow = new LetsBattle();
             // Hide();
             Close();
             letsBattleWindow.ShowDialog();
+
         }
         
         private void Save()
         {
+            
             StreamWriter sw = new StreamWriter("save.txt", append: true);
             //sw.Write(DateTime.Now + Environment.NewLine + name + Environment.NewLine + classP + Environment.NewLine + h + Environment.NewLine + dam + Environment.NewLine + def + Environment.NewLine);
             sw.Write(DateTime.Now + ", " + name + ", " + classP + ", " + h + ", " + dam + ", " + def + Environment.NewLine);
             MessageBox.Show("player " + name + " was saved and you can load him anytime you want in load section");
             sw.Close();
+            
         }
 
 #region player
+
         private void LoadPlayer()
         {
+
             B_load.IsEnabled = true;
             Gb_load.Visibility = Visibility.Collapsed;
             Gb_create_player.Visibility = Visibility.Collapsed;
             Gb_author.Visibility = Visibility.Collapsed;
             Width = 296.305;
+
             string[] arr = new string[10];
+
             for (int i = 0; i < Tb_saved_characters.SelectedItems.Count; i++)
             {
                 string record = Tb_saved_characters.Items[Tb_saved_characters.SelectedIndex].ToString();
@@ -78,6 +91,7 @@ namespace Lets_battle
             help.Health = Convert.ToInt32(arr[3]);
             help.Damage = Convert.ToInt32(arr[4]);
             help.Defense = Convert.ToInt32(arr[5]);
+
             /*
            String text = help.Name + "; " + help.ClassP + "; " + help.Health + "; " + help.Damage + "; " + help.Defense;
            MessageBox.Show(text);
@@ -91,16 +105,28 @@ namespace Lets_battle
              String text = name + "; " + classP + "; " + h + "; " + dam + "; " + def;
              MessageBox.Show(text);
              */
+
         }
 
         private void DeletePlayer()
         {
+
             StreamWriter sw = new StreamWriter("save.txt");
+
             Tb_saved_characters.Items.RemoveAt(Tb_saved_characters.SelectedIndex);
+
             string record = "";
-            for (int i = 0; i < Tb_saved_characters.Items.Count; i++) { record += Tb_saved_characters.Items[i].ToString() + Environment.NewLine; }
+
+            for (int i = 0; i < Tb_saved_characters.Items.Count; i++)
+            {
+
+                record += Tb_saved_characters.Items[i].ToString() + Environment.NewLine;
+
+            }
+
             sw.Write(record);
             sw.Close();
+
         }
 
         private void LoadToLb()
@@ -116,29 +142,40 @@ namespace Lets_battle
             int newLineCounter = 0;
 
             var sr = new StreamReader("save.txt");
+
             string[] line = new string[1];
+
             while ((line[0] = sr.ReadLine()) != null)
             {
+
                 Tb_saved_characters.Items.Add(line[0] + ",");
 
                 if (newLineCounter == whereIsNextSave)
                 {
+
                     Tb_saved_characters.Items.Add(Environment.NewLine);
                     whereIsNextSave += 6;
+
                 }
+
                 newLineCounter++;
+
             }
+
             sr.Close();
+
         }
 
         private void OpenCreatePlayer()
         {
             // Gb_settings.Visibility = Visibility.Collapsed;
+
             Gb_load.Visibility = Visibility.Collapsed;
             Gb_create_player.Visibility = Visibility.Collapsed;
             Gb_author.Visibility = Visibility.Collapsed;
             Gb_create_player.Visibility = Visibility.Visible;
             Width = 638;
+
             /*
             Gb_load.Visibility = Visibility.Collapsed;
             Gb_create_player.Visibility = Visibility.Collapsed;
@@ -150,16 +187,18 @@ namespace Lets_battle
 
         private void ReadInput()
         {
-            name = tb_inputName.Text;
-            classP = cb_Class.SelectedIndex;
-            h = Convert.ToInt32(tb_Health.Text);
-            dam = Convert.ToInt32(tb_Damage.Text);
-            def = Convert.ToInt32(tb_Defense.Text);
+            help.Name = tb_inputName.Text;
+            help.ClassP = cb_Class.SelectedIndex;
+            help.Health = Convert.ToInt32(tb_Health.Text);
+            help.Damage = Convert.ToInt32(tb_Damage.Text);
+            help.Defense = Convert.ToInt32(tb_Defense.Text);
+            
             tb_inputName.Text = null;
             cb_Class.SelectedValue = -1;
             tb_Health.Text = "";
             tb_Damage.Text = "";
             tb_Defense.Text = "";
+
             Width = 296.305;
             Gb_load.Visibility = Visibility.Collapsed;
             Gb_create_player.Visibility = Visibility.Collapsed;
@@ -170,47 +209,91 @@ namespace Lets_battle
         {
             classP = cb_Class.SelectedIndex;
             Dice dice = new Dice();
-            int h = dice.DiceRoll(20);
-            int da = dice.DiceRoll(20);
-            int de = dice.DiceRoll(20);
-            h += dice.DiceRoll(5);
-            da += dice.DiceRoll(5);
-            de += dice.DiceRoll(5);
 
-#region IDontKnow
-            tb_Health.Text = Convert.ToString(h);
-            tb_Damage.Text = Convert.ToString(da);
-            tb_Defense.Text = Convert.ToString(de);
-            int tbH = Convert.ToInt16(tb_Health.Text);
-            int tbDa = Convert.ToInt16(tb_Damage.Text);
-            int tbDe = Convert.ToInt16(tb_Defense.Text);
-            #endregion
+            int h = 0;
+            int da = 0;
+            int de = 0;
 
             switch (classP)
             {
                 case 0:
-                    if (tbH < 7 || tbDa < 10 || tbDe < 5)
+
+                    h = dice.DiceRoll(21) + dice.DiceRoll(11);
+                    da = dice.DiceRoll(19) + dice.DiceRoll(9);
+                    de = dice.DiceRoll(18) + dice.DiceRoll(8);
+
+                    #region if
+
+                    if ( h < 11 ) 
                     {
-                        tb_Health.Text = 7.ToString();
-                        tb_Damage.Text = 10.ToString();
-                        tb_Defense.Text = 5.ToString();
+
+                        h = 11;
+                        
                     }
+
+                    if ( da < 9 )
+                    {
+
+                        da = 9;
+
+                    }
+
+                    if ( de < 8 )
+                    {
+
+                        de = 8;
+
+                    }
+
+                    #endregion
+
                     break;
+
                 case 1:
-                    if (tbH < 10 || tbDa < 8 || tbDe < 9)
+
+                    h = dice.DiceRoll(18) + dice.DiceRoll(8);
+                    da = dice.DiceRoll(22) + dice.DiceRoll(12);
+                    de = dice.DiceRoll(15) + dice.DiceRoll(5);
+
+                    #region if
+
+                    if (h < 8)
                     {
-                        tb_Health.Text = 10.ToString();
-                        tb_Damage.Text = 8.ToString();
-                        tb_Defense.Text = 9.ToString();
+
+                        h = 8; 
+
                     }
+
+                    if (da < 12)
+                    {
+
+                        da = 12;
+
+                    }
+
+                    if (de < 5)
+                    {
+
+                        de = 5;
+
+                    }
+
+                    #endregion
+
                     break;
             }
-        }
-        #endregion
 
-#region author
+            tb_Health.Text = h.ToString();
+            tb_Damage.Text = da.ToString();
+            tb_Defense.Text = de.ToString();
+            
+        }
+
+        #region author
+
         private void OpenAuthor()
         {
+
             Gb_load.Visibility = Visibility.Visible;
             Gb_create_player.Visibility = Visibility.Collapsed;
             Gb_author.Visibility = Visibility.Collapsed;
@@ -218,6 +301,7 @@ namespace Lets_battle
             Gb_create_player.Visibility = Visibility.Collapsed;
             Gb_author.Visibility = Visibility.Visible;
             Width = 638;
+
             /*
             Width = 296.305;
             Gb_load.Visibility = Visibility.Visible;
@@ -227,31 +311,43 @@ namespace Lets_battle
             Gb_create_player.Visibility = Visibility.Collapsed;
             Gb_author.Visibility = Visibility.Collapsed;
             */
+
         }
         
         private void CloseAuthor()
         {
+
             Gb_load.Visibility = Visibility.Collapsed;
             Gb_create_player.Visibility = Visibility.Collapsed;
             Gb_author.Visibility = Visibility.Collapsed;
             Width = 296.305;
+
         }
+
         #endregion
+
         private void OpenSettings()
         {
+
             Width = 638;
+
             // Gb_settings.Visibility = Visibility.Visible;
             Gb_load.Visibility = Visibility.Collapsed;
             Gb_create_player.Visibility = Visibility.Collapsed;
             Gb_author.Visibility = Visibility.Collapsed;
             Gb_author.Visibility = Visibility.Collapsed;
             //Width = 296.305;
+
         }
+
+        #endregion
+
         #endregion
 
         private void B_click(object sender, RoutedEventArgs e)
         {
             if ((sender as Button) == B_start) { Start(); }
+
 #region player
             else if ((sender as Button) == B_create_player) { OpenCreatePlayer(); }
 
@@ -262,6 +358,7 @@ namespace Lets_battle
             #endregion
 
 #region load/save_player
+
             else if ((sender as Button) == B_save) { Save(); }
             
             else if ((sender as Button) == B_load) { LoadToLb(); }

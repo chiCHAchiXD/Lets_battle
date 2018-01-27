@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+
 namespace LetsBattleBookCase
 {
 #region characters
@@ -185,6 +187,7 @@ namespace LetsBattleBookCase
             Dice dice = new Dice();
             int roll = dice.DiceRoll();
             Player returnPlayer = null;
+
             switch (classP)
             {
                 case 0: // warrior
@@ -203,6 +206,7 @@ namespace LetsBattleBookCase
                     returnPlayer = new Mage(h, dam, def, name, whoP);
                     break;
             }
+
             return returnPlayer;
 
         }
@@ -229,6 +233,7 @@ namespace LetsBattleBookCase
         }
         
     }
+
 #endregion
 
 #region inventory
@@ -535,6 +540,11 @@ namespace LetsBattleBookCase
                     break;
             }
         }
+    }
+
+    public class MainWindowMethods : Help
+    {
+
     }
 
     public class Dice
