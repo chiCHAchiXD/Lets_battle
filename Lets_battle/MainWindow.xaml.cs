@@ -29,8 +29,7 @@ namespace Lets_battle
         public int def;
 
         public Help help = new Help();
-
-        public MainWindowMethods mainWindow = new MainWindowMethods();
+        
 
         #endregion
 

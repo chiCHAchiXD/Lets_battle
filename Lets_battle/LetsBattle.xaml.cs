@@ -22,13 +22,19 @@ namespace Lets_battle
 
         public Player player;
         public Player enemy;
+
+        public LetsSayEngine lse = new LetsSayEngine();
         public Help he = new Help();
         Creation cr = new Creation();
         GameArena gA = new GameArena(10, 1, 9);
         Weapon mec = new Weapon();
+
+
         public List<Inventory> inventP = new List<Inventory>();
+
         public int whoP;
         public int whoE;
+
         /// <summary>
         /// 0 - warrior
         /// 1 - mage
@@ -42,20 +48,24 @@ namespace Lets_battle
             //it must be on top!!
             InitializeComponent();
 
+            //lse.PlayerEnemyCreation(((MainWindow)Application.Current.MainWindow).help.Health, ((MainWindow)Application.Current.MainWindow).help.Damage, ((MainWindow)Application.Current.MainWindow).help.Defense, ((MainWindow)Application.Current.MainWindow).help.Name, ((MainWindow)Application.Current.MainWindow).help.ClassP,);
+            
             string name = ((MainWindow)Application.Current.MainWindow).help.Name;
             classP = ((MainWindow)Application.Current.MainWindow).help.ClassP;
             int h = ((MainWindow)Application.Current.MainWindow).help.Health;
             int dam = ((MainWindow)Application.Current.MainWindow).help.Damage;
             int def = ((MainWindow)Application.Current.MainWindow).help.Defense;
             whoP = 0;
+            
 
             inventP.Add(mec.CreateSword("mec", 10));
             inventP.Add(mec.CreateSword("novy mec", 20));
-
+            
             player = cr.InitialyPlayer(h, dam, def, name, whoP, classP);
             enemy = cr.InitialyEnemy(player);
-
+            
             whoE = enemy.Who;
+            
 
             Pb_player_health.Maximum = player.Health;
             Pb_player_health.Value = player.Health;
@@ -68,6 +78,7 @@ namespace Lets_battle
 
             GetInformLb(7);
         }
+
 #region infoInTb/Mb
 
         public void GetInformTb(string who, string withWhat, int howMuch)
@@ -170,11 +181,15 @@ namespace Lets_battle
 #endregion
 
 #region Ai
+
         public void WhoDied()
         {
+
             bool a = !player.IsAlive();
+
             if (a)
             {
+
                 if (player.Health < 0) player.Health = 0;
 
                 GetInformTb("you died" + Environment.NewLine);
@@ -183,15 +198,19 @@ namespace Lets_battle
                 B_attack_iceball.IsEnabled = false;
                 B_attack_heavy.IsEnabled = false;
                 B_attack_light.IsEnabled = false;
+
             }
+
             else
             {
+
                 Gb_attack_warrior.Visibility = Visibility.Hidden;
                 Gb_attack_mage.Visibility = Visibility.Hidden;
                 GetInformTb(enemy.Name + " died" + Environment.NewLine);
                 player.LevelIncrease(); // players livelo + 1
                 enemy = cr.NextEnemy(whoE, player); // add another enemy
                 GetInformLb(4);
+
             }
 
         }
@@ -203,26 +222,33 @@ namespace Lets_battle
 
             if (enemy is Mage)
             {
-               
 
                 int attack0 = enemy.FireBall();
                 int attack1 = enemy.IceBall();
 
                 if (attack1 > attack0)
                 {
+
                     int a = enemy.Fight(player, attack1);
+
                     GetInformTb(enemyM, "FireBall", a);
+
                 } 
 
                 else
                 {
+
                     int a = enemy.Fight(player, attack0);
+
                     GetInformTb(enemyM, "IceBall", a);
+
                 }
+
             }
 
             else if (enemy is Warrior)
             {
+
                 gA.Move(enemy, 1);
 
                 int attack0 = enemy.LightAttack(10);
@@ -230,15 +256,20 @@ namespace Lets_battle
 
                 if (attack1 > attack0)
                 {
+
                     int a = enemy.Fight(player, attack1);
                     GetInformTb(enemyM, "Heavy Attack", a);
+
                 }
 
                 else
                 {
+
                     int a = enemy.Fight(player, attack0);
                     GetInformTb(enemyM, "Light Attack", a);
+
                 }
+
             }
         }
 
@@ -418,5 +449,6 @@ namespace Lets_battle
         }
 
 #endregion
+
     }
 }
