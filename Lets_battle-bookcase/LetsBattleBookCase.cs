@@ -18,7 +18,8 @@ namespace LetsBattleBookCase
         protected int who;
         protected int level;
         protected int actionpt;
-        Dice dice = new Dice();
+        
+        protected Dice dice = new Dice();
 #endregion
 
         public Character() { }
@@ -46,7 +47,7 @@ namespace LetsBattleBookCase
         public int Fight(Character attackedOn, int dmg) { return attackedOn.DamageDealt(attackedOn, dmg); }
         private int DamageDealt(Character attackedOn, int dmg)
         {
-            int damageDealt = dice.DiceRoll(dmg) - dice.DiceRoll(attackedOn.Defense);
+            int damageDealt = (dmg + dice.DiceRoll(Damage)) - (attackedOn.Defense - dice.DiceRoll(3));
             if (damageDealt < 0) damageDealt = 0; //nobody wants to add lives, do you ?
             attackedOn.MinusHealth(damageDealt);
             return damageDealt;
@@ -54,7 +55,7 @@ namespace LetsBattleBookCase
 
         public bool IsAlive() { return (health > 0); }
 
-        public bool HasActionPts() { return ActionPoint>0; }
+        public bool HasActionPts() { return (ActionPoint>0); }
 
         protected void MinusHealth(int dmg) { health -= dmg; }
 
@@ -64,7 +65,7 @@ namespace LetsBattleBookCase
             health += 5;
             damage += 5;
             defense += 5;
-            actionpt += 2;
+            actionpt += 5;
         }
 
     }
@@ -90,38 +91,90 @@ namespace LetsBattleBookCase
     }
 
 #region classes
+
     public class Mage : Player
     {
-        Dice dice = new Dice();
         public Mage(int h, int da, int de, string na, int wh) : base(h, da, de, na, wh) { }
-        public override int FireBall()
-        {
-            int dmg = 0;
-            if (HasActionPts())
-            {
-                ActionPoint--;
-                dmg = dice.DiceRoll(Damage) + 1;
-            }
-            return dmg;
-        }
-        public override int IceBall()
-        {
-            int dmg = 0;
-            if (HasActionPts())
-            {
-                ActionPoint--;
-                dmg = dice.DiceRoll(Damage) + 2;
-            }
-            return dmg;
-        }
+        
     }
     public class Warrior : Player
     {
-        Dice dice = new Dice();
         public Warrior(int h, int da, int de, string na, int wh) : base(h, da, de, na, wh) { }
-        public override int HeavyAttack(int damageOfItem) { return dice.DiceRoll(damageOfItem) + 3; }
-        public override int LightAttack(int damageOfItem) { return dice.DiceRoll(damageOfItem) + 1; }
     }
+    #endregion
+
+#region skills
+
+    public class MagicalAttack : Player
+    {
+        public override int FireBall() { return dice.DiceRoll(Damage) + 1; }
+
+        public override int IceBall() { return dice.DiceRoll(Damage) + 2; }
+        
+        /*
+        public override int FireBall()
+        {
+            int NeededActionPoints = 1;
+            int dmg = 0;
+            if (ActionPoint >= NeededActionPoints)
+            {
+                ActionPoint -= NeededActionPoints;
+                dmg = dice.DiceRoll(Damage) + 1;
+            }
+            else dmg = 0;
+            return dmg;
+        }
+
+        public override int IceBall()
+        {
+            int NeededActionPoints = 2;
+            int dmg = 0;
+            if (ActionPoint >= NeededActionPoints)
+            {
+                ActionPoint -= NeededActionPoints;
+                dmg = dice.DiceRoll(Damage) + 2;
+            }
+            else dmg = 0;
+            return dmg;
+        }
+        */
+    }
+
+    public class PhisicalAttack : Player
+    {
+        public override int HeavyAttack(int damageOfItem) { return dice.DiceRoll(damageOfItem) + 3; }
+
+        public override int LightAttack(int damageOfItem) { return dice.DiceRoll(damageOfItem) + 1; }
+        
+        /*
+        public override int HeavyAttack(int damageOfItem)
+        {
+            int NeededActionPoints = 2;
+            int dmg = 0;
+            if (ActionPoint >= NeededActionPoints)
+            {
+                ActionPoint -= NeededActionPoints;
+                dmg = dice.DiceRoll(damageOfItem) + 3;
+            }
+            else dmg = 0;
+            return dmg;
+        }
+
+        public override int LightAttack(int damageOfItem)
+        {
+            int NeededActionPoints = 2;
+            int dmg = 0;
+            if (ActionPoint >= NeededActionPoints)
+            {
+                ActionPoint -= NeededActionPoints;
+                dmg = dice.DiceRoll(damageOfItem) + 1;
+            }
+            else dmg = 0;
+            return dmg;
+        }
+        */
+    }
+
     #endregion
 
     public class Creation
@@ -145,26 +198,18 @@ namespace LetsBattleBookCase
                         */
                     returnPlayer = new Warrior(h, dam, def, name, whoP); //create player as warrior
                     break;
+
                 case 1: //mage
                     returnPlayer = new Mage(h, dam, def, name, whoP);
                     break;
             }
             return returnPlayer;
-            /*
 
-            if (roll % 2 == 0) //if sude 
-                inventoryEnemy = new Sword("Broken Sword", 5, 5);
-            else //if liche
-                inventoryEnemy = new Sword("Straight Sword", 10, 25);
-
-            inventoryListEnemy.Add(inventoryEnemy);
-            */
         }
         public Player InitialyEnemy(Character player)
         {
             int whoE = 1;
-            Player returnEnemy = null;
-            returnEnemy = ChooseOfEnemy(whoE, player); // creation of enemy
+            Player returnEnemy = ChooseOfEnemy(whoE, player); // creation of enemy
             return returnEnemy;
         }
         public Player NextEnemy(int whoE, Character player)

@@ -17,7 +17,9 @@ namespace Lets_battle
 {
     public partial class LetsBattle : Window
     {
+
 #region variables
+
         public Player player;
         public Player enemy;
         public Help he = new Help();
@@ -32,27 +34,42 @@ namespace Lets_battle
         /// 1 - mage
         /// </summary>
         public int classP;
+
         #endregion
+
         public LetsBattle()
         {
             //it must be on top!!
             InitializeComponent();
+
             string name = ((MainWindow)Application.Current.MainWindow).help.Name;
             classP = ((MainWindow)Application.Current.MainWindow).help.ClassP;
             int h = ((MainWindow)Application.Current.MainWindow).help.Health;
             int dam = ((MainWindow)Application.Current.MainWindow).help.Damage;
             int def = ((MainWindow)Application.Current.MainWindow).help.Defense;
             whoP = 0;
+
             inventP.Add(mec.CreateSword("mec", 10));
             inventP.Add(mec.CreateSword("novy mec", 20));
+
             player = cr.InitialyPlayer(h, dam, def, name, whoP, classP);
             enemy = cr.InitialyEnemy(player);
+
             whoE = enemy.Who;
+
+            Pb_player_health.Maximum = player.Health;
+            Pb_player_health.Value = player.Health;
+
+            Pb_enemy_health.Maximum = enemy.Health;
+            Pb_enemy_health.Value = enemy.Health;
+
             Gb_attack_warrior.Visibility = Visibility.Hidden;
             Gb_attack_mage.Visibility = Visibility.Hidden;
+
             GetInformLb(7);
         }
 #region infoInTb/Mb
+
         public void GetInformTb(string who, string withWhat, int howMuch)
         {
             //if player attacked
@@ -60,6 +77,7 @@ namespace Lets_battle
             {
                 Tb_get_informed.Text += ">> you attacked on " + enemy.Name + " with " + withWhat + " for " + howMuch + " damage!" + Environment.NewLine;
                 Tb_get_informed.Text += "-------------------------------------" + Environment.NewLine;
+                
             }
             //if enemy attacked
             else if (who == enemy.Name)
@@ -68,6 +86,7 @@ namespace Lets_battle
                 Tb_get_informed.Text += "-------------------------------------" + Environment.NewLine;
             }
             Tb_get_informed.ScrollToEnd();
+            
         }
 
         public void GetInformTb(string whateverYouWant)
@@ -92,6 +111,8 @@ namespace Lets_battle
                     L_playerHealth.Content = player.Health;
                     L_playerDamage.Content = player.Damage;
                     L_playerDefense.Content = player.Defense;
+
+                    Pb_player_health.Value = player.Health;
                     break;
                 case 2:
                     //enemy
@@ -99,6 +120,8 @@ namespace Lets_battle
                     L_enemyHealth.Content = enemy.Health;
                     L_enemyDamage.Content = enemy.Damage;
                     L_enemyDefense.Content = enemy.Defense;
+
+                    Pb_enemy_health.Value = enemy.Health;
                     break;
                 case 3:
                     //arena
@@ -111,11 +134,15 @@ namespace Lets_battle
                     L_playerHealth.Content = player.Health;
                     L_playerDamage.Content = player.Damage;
                     L_playerDefense.Content = player.Defense;
+
+                    Pb_player_health.Value = player.Health;
                     //enemy
                     L_enemyName.Content = enemy.Name;
                     L_enemyHealth.Content = enemy.Health;
                     L_enemyDamage.Content = enemy.Damage;
                     L_enemyDefense.Content = enemy.Defense;
+
+                    Pb_enemy_health.Value = enemy.Health;
                     break;
                 case 7:
                     //player
@@ -124,14 +151,18 @@ namespace Lets_battle
                     L_playerHealth.Content = player.Health;
                     L_playerDamage.Content = player.Damage;
                     L_playerDefense.Content = player.Defense;
+
+                    Pb_player_health.Value = player.Health;
                     //enemy
                     L_enemyName.Content = enemy.Name;
                     L_enemyHealth.Content = enemy.Health;
                     L_enemyDamage.Content = enemy.Damage;
                     L_enemyDefense.Content = enemy.Defense;
+
+                    Pb_enemy_health.Value = enemy.Health;
                     //arena
                     L_arena.Content = gA.GetGameArenaLook();
-                    L_action_pts.Content = player.ActionPoint;
+                    //L_action_pts.Content = player.ActionPoint;
                     break;
             }
         }
@@ -248,16 +279,20 @@ namespace Lets_battle
 
         public void HowShouldEveryoneAttack(int B_number)
         {
+            HowToPlayer(B_number);
+            HowToEnemy();
+            GetInformLb(7);
             /*
             Dice dice = new Dice();
             int whoWillAttackFirst = dice.DiceRoll();
             int whoAttacked;
             */
+            /*
             if (player.HasActionPts())
             {
                 HowToPlayer(B_number);
             }
-
+            */
             //if sude player first attack
             /*if (whoWillAttackFirst % 2 == 0)
             {
@@ -266,11 +301,12 @@ namespace Lets_battle
             }
             */
             //if sude enemyfirst attack
+            /*
             if (enemy.HasActionPts())
             {
                 HowToEnemy();
             }
-
+            */
             /*
             else
             {
@@ -278,7 +314,7 @@ namespace Lets_battle
                 whoAttacked = 1;
             }
             */
-            GetInformLb(7);
+            //GetInformLb(7);
             //based on whoattacked the other one will be next
             /*
             switch (whoAttacked)
@@ -293,10 +329,10 @@ namespace Lets_battle
                     break;
             }
             */
-            GetInformLb(7);
-            
+            //GetInformLb(7);
+
             //player.ActionPoint++;
-           
+
             if (!player.IsAlive() || !enemy.IsAlive()) WhoDied();
 
             GetInformLb(7);
@@ -313,18 +349,11 @@ namespace Lets_battle
                 switch (classP)
                 {
                     case 0:
-                        /*
-                        HowShouldEveryoneAttack(1);
-                        GetInformLb(4);
-                        */
                         Gb_attack_mage.Visibility = Visibility.Hidden;
                         Gb_attack_warrior.Visibility = Visibility.Visible;
                         break;
+
                     case 1:
-                        /*
-                        HowShouldEveryoneAttack(1);
-                        GetInformLb(4);
-                        */
                         Gb_attack_warrior.Visibility = Visibility.Hidden;
                         Gb_attack_mage.Visibility = Visibility.Visible;
                         break;
@@ -380,12 +409,14 @@ namespace Lets_battle
                     HowShouldEveryoneAttack(0);
                     GetInformLb(4);
                     break;
+
                 case 1:
                     HowShouldEveryoneAttack(1);
                     GetInformLb(4);
                     break;
             }
         }
+
 #endregion
     }
 }

@@ -18,14 +18,18 @@ namespace Lets_battle
 {
     public partial class MainWindow : Window
     {
+
 #region variables
+
         public string name;
         public int classP;
         public int h;
         public int dam;
         public int def;
         public Help help = new Help();
+
         #endregion
+
         public MainWindow()
         {
             InitializeComponent(); //Must be on TOP
@@ -172,6 +176,7 @@ namespace Lets_battle
             h += dice.DiceRoll(5);
             da += dice.DiceRoll(5);
             de += dice.DiceRoll(5);
+
 #region IDontKnow
             tb_Health.Text = Convert.ToString(h);
             tb_Damage.Text = Convert.ToString(da);
@@ -180,6 +185,7 @@ namespace Lets_battle
             int tbDa = Convert.ToInt16(tb_Damage.Text);
             int tbDe = Convert.ToInt16(tb_Defense.Text);
             #endregion
+
             switch (classP)
             {
                 case 0:

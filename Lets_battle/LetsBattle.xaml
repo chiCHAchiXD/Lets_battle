@@ -20,29 +20,29 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Label Content="ENEMY" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Label Content="Health:" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top"/>
-        <Label Content="Damage:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top"/>
-        <Label Content="Defense:" HorizontalAlignment="Left" Margin="10,123,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="L_enemyHealth" Content=" " HorizontalAlignment="Left" Margin="81,71,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="L_enemyDamage" Content=" " HorizontalAlignment="Left" Margin="81,97,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="L_enemyDefense" Content=" " HorizontalAlignment="Left" Margin="81,123,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.705,-0.105"/>
+        <Label Content="Health:" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
+        <Label Content="Damage:" HorizontalAlignment="Left" Margin="-97,23,0,0" VerticalAlignment="Top"/>
+        <Label Content="Defense:" HorizontalAlignment="Left" Margin="-97,49,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="L_enemyHealth" Content=" " HorizontalAlignment="Left" Margin="81,37,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="L_enemyDamage" Content=" " HorizontalAlignment="Left" Margin="-26,23,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="L_enemyDefense" Content=" " HorizontalAlignment="Left" Margin="-26,49,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.705,-0.105"/>
         <Label Content="PLAYER" HorizontalAlignment="Left" Margin="171,10,0,0" VerticalAlignment="Top"/>
-        <Label Content="Health:" HorizontalAlignment="Left" Margin="182,71,0,0" VerticalAlignment="Top"/>
-        <Label Content="Damage:" HorizontalAlignment="Left" Margin="182,97,0,0" VerticalAlignment="Top"/>
-        <Label Content="Defense:" HorizontalAlignment="Left" Margin="182,123,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="L_playerHealth" Content=" " HorizontalAlignment="Left" Margin="253,71,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="L_playerDamage" Content=" " HorizontalAlignment="Left" Margin="253,97,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="L_playerDefense" Content=" " HorizontalAlignment="Left" Margin="253,123,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.705,-0.105"/>
-        <Label x:Name="L_playerName" Content=" " HorizontalAlignment="Left" Margin="253,44,0,0" VerticalAlignment="Top" Width="93"/>
-        <Label x:Name="L_playerName_Copy_info" Content="Name:" HorizontalAlignment="Left" Margin="182,45,0,0" VerticalAlignment="Top" Width="55" RenderTransformOrigin="0.8,0.538"/>
-        <Label x:Name="l_" Content="Name:" HorizontalAlignment="Left" Margin="12,44,0,0" VerticalAlignment="Top" Width="55" RenderTransformOrigin="0.8,0.538"/>
-        <Label x:Name="L_enemyName" Content=" " HorizontalAlignment="Left" Margin="81,45,0,0" VerticalAlignment="Top" Width="93"/>
+        <Label Content="Health:" HorizontalAlignment="Left" Margin="182,37,0,0" VerticalAlignment="Top"/>
+        <Label Content="Damage:" HorizontalAlignment="Left" Margin="219,-111,0,0" VerticalAlignment="Top"/>
+        <Label Content="Defense:" HorizontalAlignment="Left" Margin="219,-85,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.043,1.577"/>
+        <Label x:Name="L_playerHealth" Content=" " HorizontalAlignment="Left" Margin="253,37,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="L_playerDamage" Content=" " HorizontalAlignment="Left" Margin="290,-111,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="L_playerDefense" Content=" " HorizontalAlignment="Left" Margin="290,-85,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.705,-0.105"/>
+        <Label x:Name="L_playerName" Content=" " HorizontalAlignment="Left" Margin="233,13,0,0" VerticalAlignment="Top" Width="93"/>
+        <Label x:Name="L_playerName_Copy_info" Content="Name:" HorizontalAlignment="Left" Margin="-96,-18,0,0" VerticalAlignment="Top" Width="55" RenderTransformOrigin="0.8,0.538"/>
+        <Label x:Name="l_" Content="Name:" HorizontalAlignment="Left" Margin="-266,-19,0,0" VerticalAlignment="Top" Width="55" RenderTransformOrigin="0.8,0.538"/>
+        <Label x:Name="L_enemyName" Content=" " HorizontalAlignment="Left" Margin="64,13,0,0" VerticalAlignment="Top" Width="93"/>
         <Button x:Name="B_fight" Content="Fight" HorizontalAlignment="Left" Margin="49,170,0,0" VerticalAlignment="Top" Width="172" Height="51" Click="B_click"/>
         <Button x:Name="B_inventory" Content="Inventory" HorizontalAlignment="Left" Margin="49,226,0,0" VerticalAlignment="Top" Width="172" Height="51" Click="B_click"/>
-        <Label Content="Level:" HorizontalAlignment="Left" Margin="226,10,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="L_playerLevel" Content=" " HorizontalAlignment="Left" Margin="297,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.705,-0.105"/>
+        <Label Content="Level:" HorizontalAlignment="Left" Margin="189,68,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="L_playerLevel" Content=" " HorizontalAlignment="Left" Margin="260,68,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.705,-0.105"/>
         <Button x:Name="B_transfer" Content="Transfer" HorizontalAlignment="Left" Margin="-232,257,0,0" VerticalAlignment="Top" Width="172" Height="51" Click="B_click"/>
-        <TextBox x:Name="Tb_get_informed" HorizontalAlignment="Left" Height="313" Margin="12,338,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1110" Text=" "/>
+        <TextBox x:Name="Tb_get_informed" HorizontalAlignment="Left" Height="369" Margin="12,282,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1110" Text=" "/>
         <Label Content="Arena:" HorizontalAlignment="Left" Margin="793,0,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.654" Width="44" Height="26"/>
         <Label x:Name="L_arena" Content="" HorizontalAlignment="Left" Margin="946,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.654" Width="176" Height="26"/>
         <!--
@@ -73,7 +73,9 @@
             </Grid>
 
         </GroupBox>
-        <Label Content="Action points: " HorizontalAlignment="Left" Margin="346,10,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="L_action_pts" Content="" HorizontalAlignment="Left" Margin="435,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Action points: " HorizontalAlignment="Left" Margin="-177,143,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="L_action_pts" Content="" HorizontalAlignment="Left" Margin="-88,143,0,0" VerticalAlignment="Top"/>
+        <ProgressBar x:Name="Pb_player_health" HorizontalAlignment="Left" Height="22" Margin="233,41,0,0" VerticalAlignment="Top" Width="124"/>
+        <ProgressBar x:Name="Pb_enemy_health" HorizontalAlignment="Left" Height="22" Margin="64,41,0,0" VerticalAlignment="Top" Width="113"/>
     </Grid>
 </Window>
