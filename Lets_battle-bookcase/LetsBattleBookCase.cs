@@ -12,7 +12,10 @@ namespace LetsBattleBookCase
     public class Character
     {
 
-#region variables
+       
+
+
+        #region variables
 
         protected string name;
         protected int health;
@@ -21,22 +24,11 @@ namespace LetsBattleBookCase
         protected int who;
         protected int level;
         protected int actionpt;
+        protected int increasePoint;
         
         protected Dice dice = new Dice();
 
-#endregion
-
-        public Character() { }
-        public Character(int h, int da, int de, string na, int wh)
-        {
-            health = h;
-            damage = da;
-            defense = de;
-            name = na;
-            who = wh;
-            level = 1;
-            actionpt = 5;
-        }
+        #endregion
 
 #region getAndSet
 
@@ -47,8 +39,24 @@ namespace LetsBattleBookCase
         public int Level { get { return level; } set { defense = value; } }
         public string Name { get { return name; } set { name = value; } }
         public int ActionPoint { get { return actionpt; } set { actionpt = value; } }
+        public int IncreasePoint { get { return increasePoint; } set { increasePoint = value; } }
 
-#endregion
+        #endregion
+
+        public Character() { }
+
+        public Character(int h, int da, int de, string na, int wh)
+        {
+
+            health = h;
+            damage = da;
+            defense = de;
+            name = na;
+            who = wh;
+            level = 1;
+            //actionpt = 5;
+
+        }
 
         public int Fight(Character attackedOn, int dmg) { return attackedOn.DamageDealt(attackedOn, dmg); }
 
@@ -58,9 +66,10 @@ namespace LetsBattleBookCase
             int damageDealt = (dmg + Damage /*dice.DiceRoll(Damage)*/) - (attackedOn.Defense);//- dice.DiceRoll(3));
             
             if (damageDealt < 0)
-                damageDealt = 0; //nobody wants to add lives, do you ?
+                damageDealt = 1; //nobody wants to add lives, do you ?
             
             attackedOn.MinusHealth(damageDealt);
+
             return damageDealt;
 
         }
@@ -71,6 +80,35 @@ namespace LetsBattleBookCase
 
         protected void MinusHealth(int dmg) { health -= dmg; }
 
+        public void IncreaseCurrentStat(int whichStat)
+        {
+
+            switch (whichStat)
+            {
+
+                case 0:
+
+                    Health++;
+
+                    break;
+
+                case 1:
+
+                    Damage++;
+
+                    break;
+
+                case 2:
+
+                    Defense++;
+
+                    break;
+
+            }
+
+        }
+
+        /*
         public void LevelIncrease()
         {
             level++;
@@ -79,7 +117,7 @@ namespace LetsBattleBookCase
             defense += 5;
             actionpt += 5;
         }
-
+        */
     }
 
     public abstract class Player : Character
@@ -106,18 +144,22 @@ namespace LetsBattleBookCase
 
     public class Mage : Player
     {
+
         public Mage(int h, int da, int de, string na, int wh) : base(h, da, de, na, wh) { }
         
     }
     public class Warrior : Player
     {
+
         public Warrior(int h, int da, int de, string na, int wh) : base(h, da, de, na, wh) { }
+
     }
 
     #region skills
 
     public class MagicalAttack : Player
     {
+
         public override int FireBall() { return dice.DiceRoll(Damage) + 10; }
 
         public override int IceBall() { return dice.DiceRoll(Damage) + 20; }
@@ -153,6 +195,7 @@ namespace LetsBattleBookCase
 
     public class PhisicalAttack : Player
     {
+
         public override int HeavyAttack(int damageOfItem) { return dice.DiceRoll(damageOfItem) + 30; }
 
         public override int LightAttack(int damageOfItem) { return dice.DiceRoll(damageOfItem) + 10; }
@@ -604,7 +647,7 @@ namespace LetsBattleBookCase
 
         }
 
-           
+        
 
     }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using LetsBattleBookCase;
+
 namespace Lets_battle
 {
     public partial class LetsBattle : Window
@@ -29,6 +31,10 @@ namespace Lets_battle
         GameArena gA = new GameArena(10, 1, 9);
         Weapon mec = new Weapon();
 
+        string name;
+        int h;
+        int dam;
+        int def;
 
         public List<Inventory> inventP = new List<Inventory>();
 
@@ -48,14 +54,13 @@ namespace Lets_battle
             //it must be on top!!
             InitializeComponent();
 
+            WindowState = WindowState.Maximized;
+            WindowStyle = WindowStyle.None;
+
             //lse.PlayerEnemyCreation(((MainWindow)Application.Current.MainWindow).help.Health, ((MainWindow)Application.Current.MainWindow).help.Damage, ((MainWindow)Application.Current.MainWindow).help.Defense, ((MainWindow)Application.Current.MainWindow).help.Name, ((MainWindow)Application.Current.MainWindow).help.ClassP,);
-            
-            string name = ((MainWindow)Application.Current.MainWindow).help.Name;
-            classP = ((MainWindow)Application.Current.MainWindow).help.ClassP;
-            int h = ((MainWindow)Application.Current.MainWindow).help.Health;
-            int dam = ((MainWindow)Application.Current.MainWindow).help.Damage;
-            int def = ((MainWindow)Application.Current.MainWindow).help.Defense;
-            whoP = 0;
+
+
+            SetStatsToLetsBattle();
             
 
             inventP.Add(mec.CreateSword("mec", 10));
@@ -63,9 +68,8 @@ namespace Lets_battle
             
             player = cr.InitialyPlayer(h, dam, def, name, whoP, classP);
             enemy = cr.InitialyEnemy(player);
-            
+
             whoE = enemy.Who;
-            
 
             Pb_player_health.Maximum = player.Health;
             Pb_player_health.Value = player.Health;
@@ -75,8 +79,10 @@ namespace Lets_battle
 
             Gb_attack_warrior.Visibility = Visibility.Hidden;
             Gb_attack_mage.Visibility = Visibility.Hidden;
+            Gb_increase_level.Visibility = Visibility.Hidden;
 
             GetInformLb(7);
+            
         }
 
 #region infoInTb/Mb
@@ -178,7 +184,131 @@ namespace Lets_battle
             }
         }
 
-#endregion
+        #endregion
+
+#region methods
+        
+        void SetStatsToLetsBattle()
+        {
+
+            name = ((MainWindow)Application.Current.MainWindow).help.Name;
+            classP = ((MainWindow)Application.Current.MainWindow).help.ClassP;
+            h = ((MainWindow)Application.Current.MainWindow).help.Health;
+            dam = ((MainWindow)Application.Current.MainWindow).help.Damage;
+            def = ((MainWindow)Application.Current.MainWindow).help.Defense;
+            whoP = 0;
+
+        }
+
+        void SetStatsToMainWindowOnClose()
+        {
+
+            ((MainWindow)Application.Current.MainWindow).help.Health = player.Health;
+            ((MainWindow)Application.Current.MainWindow).help.Damage = player.Damage;
+            ((MainWindow)Application.Current.MainWindow).help.Defense = player.Defense;
+            ((MainWindow)Application.Current.MainWindow).help.Name = player.Name;
+            ((MainWindow)Application.Current.MainWindow).help.ClassP = classP;
+
+        }
+
+        void CloseAndOpenParrent()
+        {
+
+            SetStatsToMainWindowOnClose();
+
+            Close();
+
+            ((MainWindow)Application.Current.MainWindow).Show();
+
+        }
+
+        void ShowStats()
+        {
+
+            Lb_stats.Items.Clear();
+            Lb_stats.Items.Add("Health: " + player.Health);
+            Lb_stats.Items.Add("Damage: " + player.Damage);
+            Lb_stats.Items.Add("Defense: " + player.Defense);
+
+        }
+
+        void IncreaseLevelShow()
+        {
+            
+            if (player.IncreasePoint != 0)
+            {
+
+                ShowStats();
+
+                Gb_increase_level.Visibility = Visibility.Visible;
+
+            }
+            
+        }
+
+        void IncreaseStats()
+        {
+
+            if (player.IncreasePoint > 1)
+            {
+
+                int selIn = Lb_stats.SelectedIndex;
+
+                player.IncreaseCurrentStat(selIn);
+
+                ShowStats();
+
+                player.IncreasePoint--;
+
+            }
+
+            else Gb_increase_level.Visibility = Visibility.Collapsed;
+
+        }
+
+        void FightMenu()
+        {
+
+            switch (classP)
+            {
+
+                case 0:
+
+                    Gb_attack_mage.Visibility = Visibility.Hidden;
+                    Gb_attack_warrior.Visibility = Visibility.Visible;
+
+                    break;
+
+                case 1:
+
+                    Gb_attack_warrior.Visibility = Visibility.Hidden;
+                    Gb_attack_mage.Visibility = Visibility.Visible;
+
+                    break;
+
+            }
+
+        }
+
+        void MoveLeft()
+        {
+
+            GetInformLb(3);
+            gA.Move(player, -1);
+            gA.Move(enemy, 1);
+            GetInformLb(3);
+
+        }
+
+        void MoveRight()
+        {
+
+            GetInformLb(3);
+            gA.Move(player, +1);
+            gA.Move(enemy, -1);
+            GetInformLb(3);
+
+        }
 
 #region Ai
 
@@ -206,9 +336,12 @@ namespace Lets_battle
 
                 Gb_attack_warrior.Visibility = Visibility.Hidden;
                 Gb_attack_mage.Visibility = Visibility.Hidden;
+
                 GetInformTb(enemy.Name + " died" + Environment.NewLine);
-                player.LevelIncrease(); // players livelo + 1
+
+                player.IncreasePoint++;
                 enemy = cr.NextEnemy(whoE, player); // add another enemy
+
                 GetInformLb(4);
 
             }
@@ -277,34 +410,52 @@ namespace Lets_battle
         {
             if (player is Mage)
             {
+
                 switch (B_number)
                 {
+
                     case 0:
+
                         int attack = player.Fight(enemy, player.FireBall());
                         GetInformTb(player.Name, "FireBall", attack);
+
                         break;
+
                     case 1:
+
                         int attack1 = player.Fight(enemy, player.IceBall());
                         GetInformTb(player.Name, "IceBall", attack1);
+
                         break;
+
                 }
+
             }
 
             else if (player is Warrior)
             {
+
                 switch (B_number)
                 {
+
                     //if 0 Heavy Attack
                     case 0:
+
                         int attack = player.Fight(enemy, player.HeavyAttack(10));//inventoryPlayer.GetItemDamage((Item)game.inventoryListPlayer[0])));
                         GetInformTb(player.Name, "Heavy Attack", attack);
+
                         break;
+
                     //if 1 Light Attack
                     case 1:
+
                         int attack1 = player.Fight(enemy, player.LightAttack(10));//inventoryPlayer.GetItemDamage((Item)game.inventoryListPlayer[0])));
                         GetInformTb(player.Name, "Light Attack", attack1);
+
                         break;
+
                 }
+
             }
         }
 
@@ -368,71 +519,42 @@ namespace Lets_battle
 
             GetInformLb(7);
         }
-        
+
+        #endregion
+
         #endregion
 
 #region buttons
 
-        private void B_click(object sender, RoutedEventArgs e)
+        void B_click(object sender, RoutedEventArgs e)
         {
-            if ((sender as Button) == B_fight)
-            {
-                switch (classP)
-                {
-                    case 0:
-                        Gb_attack_mage.Visibility = Visibility.Hidden;
-                        Gb_attack_warrior.Visibility = Visibility.Visible;
-                        break;
 
-                    case 1:
-                        Gb_attack_warrior.Visibility = Visibility.Hidden;
-                        Gb_attack_mage.Visibility = Visibility.Visible;
-                        break;
-                }
-            }
+            if ((sender as Button) == B_fight) { FightMenu(); }
 
             else if ((sender as Button) == B_inventory) { GetInformTb(mec.WeaponInfo(inventP)); }
 
-            else if ((sender as Button) == B_go_left)
-            {
+            else if ((sender as Button) == B_go_left) { MoveLeft(); }
 
-                GetInformLb(3);
-                gA.Move(player, -1);
-                gA.Move(enemy, 1);
-                GetInformLb(3);
-                
-            }
+            else if ((sender as Button) == B_go_right) { MoveRight(); }
 
-            else if ((sender as Button) == B_go_right)
-            {
-                GetInformLb(3);
-                gA.Move(player, +1);
-                gA.Move(enemy, -1);
-                GetInformLb(3);
-            }
+            else if ((sender as Button) == B_increase_level) { IncreaseLevelShow(); }
+
+            else if ((sender as Button) == B_increase_stat) { IncreaseStats(); }
+
+            else if ((sender as Button) == B_close) { CloseAndOpenParrent(); }
 
         }
 
-        private void Key_pressed(object sender, KeyEventArgs e)
+        void Key_pressed(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Left)
-            {
-                GetInformLb(3);
-                gA.Move(player, -1);
-                gA.Move(enemy, 1);
-                GetInformLb(3);
-            }
 
-            else if (e.Key == Key.Right)
-            {
-                GetInformLb(3);
-                gA.Move(player, +1);
-                gA.Move(enemy, -1);
-                GetInformLb(3);
-            }
+            if (e.Key == Key.Left) { MoveLeft(); }
+
+            else if (e.Key == Key.Right) { MoveRight(); }
+                
         }
 
-        private void B_attack_Click(object sender, RoutedEventArgs e)
+        void B_attack_Click(object sender, RoutedEventArgs e)
         {
             switch (classP)
             {
@@ -451,4 +573,5 @@ namespace Lets_battle
 #endregion
 
     }
+
 }

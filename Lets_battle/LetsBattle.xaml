@@ -37,12 +37,12 @@
         <Label x:Name="L_playerName_Copy_info" Content="Name:" HorizontalAlignment="Left" Margin="-96,-18,0,0" VerticalAlignment="Top" Width="55" RenderTransformOrigin="0.8,0.538"/>
         <Label x:Name="l_" Content="Name:" HorizontalAlignment="Left" Margin="-266,-19,0,0" VerticalAlignment="Top" Width="55" RenderTransformOrigin="0.8,0.538"/>
         <Label x:Name="L_enemyName" Content=" " HorizontalAlignment="Left" Margin="64,13,0,0" VerticalAlignment="Top" Width="93"/>
-        <Button x:Name="B_fight" Content="Fight" HorizontalAlignment="Left" Margin="49,170,0,0" VerticalAlignment="Top" Width="172" Height="51" Click="B_click"/>
-        <Button x:Name="B_inventory" Content="Inventory" HorizontalAlignment="Left" Margin="49,226,0,0" VerticalAlignment="Top" Width="172" Height="51" Click="B_click"/>
+        <Button x:Name="B_fight" Content="Fight" HorizontalAlignment="Left" Margin="5,175,0,0" VerticalAlignment="Top" Width="172" Height="51" Click="B_click"/>
+        <Button x:Name="B_inventory" Content="Inventory" HorizontalAlignment="Left" Margin="5,231,0,0" VerticalAlignment="Top" Width="172" Height="51" Click="B_click"/>
         <Label Content="Level:" HorizontalAlignment="Left" Margin="189,68,0,0" VerticalAlignment="Top"/>
         <Label x:Name="L_playerLevel" Content=" " HorizontalAlignment="Left" Margin="260,68,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.705,-0.105"/>
         <Button x:Name="B_transfer" Content="Transfer" HorizontalAlignment="Left" Margin="-232,257,0,0" VerticalAlignment="Top" Width="172" Height="51" Click="B_click"/>
-        <TextBox x:Name="Tb_get_informed" HorizontalAlignment="Left" Height="369" Margin="12,282,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1110" Text=" "/>
+        <TextBox x:Name="Tb_get_informed" HorizontalAlignment="Left" Margin="12,282,0,0" TextWrapping="Wrap" Width="1110" Text=" " Height="369" VerticalAlignment="Top"/>
         <Label Content="Arena:" HorizontalAlignment="Left" Margin="793,0,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.654" Width="44" Height="26"/>
         <Label x:Name="L_arena" Content="" HorizontalAlignment="Left" Margin="946,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.654" Width="176" Height="26"/>
         <!--
@@ -51,7 +51,7 @@
         -->
         <Button x:Name="B_go_right" Content="Go right" HorizontalAlignment="Left" Margin="1041,67,0,0" VerticalAlignment="Top" Width="50" Height="51" Click="B_click"/>
         <Button x:Name="B_go_left" Content="Go left" HorizontalAlignment="Left" Margin="986,67,0,0" VerticalAlignment="Top" Width="50" Height="51" Click="B_click"/>
-        <GroupBox x:Name="Gb_attack_warrior" Header="Attack" HorizontalAlignment="Left" Height="107" Margin="253,170,0,0" VerticalAlignment="Top" Width="124">
+        <GroupBox x:Name="Gb_attack_warrior" Header="Attack" HorizontalAlignment="Left" Height="107" Margin="182,175,0,0" VerticalAlignment="Top" Width="124">
             <Grid RenderTransformOrigin="0.5,0.5" Margin="0,0,-2,4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="35*"/>
@@ -62,7 +62,7 @@
             </Grid>
 
         </GroupBox>
-        <GroupBox x:Name="Gb_attack_mage" Header="Attack" HorizontalAlignment="Left" Height="107" Margin="253,170,0,0" VerticalAlignment="Top" Width="124">
+        <GroupBox x:Name="Gb_attack_mage" Header="Attack" HorizontalAlignment="Left" Height="107" Margin="182,175,0,0" VerticalAlignment="Top" Width="124">
             <Grid RenderTransformOrigin="0.5,0.5" Margin="0,0,-2,4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="35*"/>
@@ -77,5 +77,17 @@
         <Label x:Name="L_action_pts" Content="" HorizontalAlignment="Left" Margin="-88,143,0,0" VerticalAlignment="Top"/>
         <ProgressBar x:Name="Pb_player_health" HorizontalAlignment="Left" Height="22" Margin="233,41,0,0" VerticalAlignment="Top" Width="124"/>
         <ProgressBar x:Name="Pb_enemy_health" HorizontalAlignment="Left" Height="22" Margin="64,41,0,0" VerticalAlignment="Top" Width="113"/>
+        <Button x:Name="B_increase_level" Content="Increase level" HorizontalAlignment="Left" Margin="284,69,0,0" VerticalAlignment="Top" Width="83" Height="26" Click="B_click"/>
+        <GroupBox x:Name="Gb_increase_level" Header="Gb_increase_level" HorizontalAlignment="Left" Height="208" Margin="382,69,0,0" VerticalAlignment="Top" Width="233">
+            <Grid RenderTransformOrigin="0.5,0.5" Margin="0,0,-2,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <ListBox x:Name="Lb_stats" Height="171" Margin="10,10,54,0" VerticalAlignment="Top" Width="159"/>
+                <Button x:Name="B_increase_stat" Content="+" HorizontalAlignment="Left" Margin="174,10,0,0" VerticalAlignment="Top" Width="39" Height="25" Click="B_click"/>
+            </Grid>
+
+        </GroupBox>
+        <Button x:Name="B_close" Content="Close" HorizontalAlignment="Left" Margin="705,9,0,0" VerticalAlignment="Top" Width="83" Height="26" Click="B_click"/>
     </Grid>
 </Window>

@@ -22,11 +22,13 @@ namespace Lets_battle
 
 #region variables
 
+        /*
         public string name;
         public int classP;
         public int h;
         public int dam;
         public int def;
+        */
 
         public Help help = new Help();
         
@@ -44,37 +46,56 @@ namespace Lets_battle
 
 #region methods
 
-        private void Start()
+        void Start()
         {
 
             var letsBattleWindow = new LetsBattle();
-            // Hide();
-            Close();
-            letsBattleWindow.ShowDialog();
 
+            Hide();
+            //Close();
+            
+            letsBattleWindow.ShowDialog();
+            
         }
         
-        private void Save()
+        void Save()
         {
             
             StreamWriter sw = new StreamWriter("save.txt", append: true);
+
             //sw.Write(DateTime.Now + Environment.NewLine + name + Environment.NewLine + classP + Environment.NewLine + h + Environment.NewLine + dam + Environment.NewLine + def + Environment.NewLine);
-            sw.Write(DateTime.Now + ", " + name + ", " + classP + ", " + h + ", " + dam + ", " + def + Environment.NewLine);
-            MessageBox.Show("player " + name + " was saved and you can load him anytime you want in load section");
+
+            sw.Write(DateTime.Now + ", " + help.Name + ", " + help.ClassP + ", " + help.Health + ", " + help.Damage + ", " + help.Defense + Environment.NewLine);
+            MessageBox.Show("player " + help.Name + " was saved and you can load him anytime you want in load section");
+
             sw.Close();
             
         }
 
 #region player
 
-        private void LoadPlayer()
+        void HideComponents()
         {
 
-            B_load.IsEnabled = true;
+            //Gb_settings.Visibility = Visibility.Collapsed;
             Gb_load.Visibility = Visibility.Collapsed;
             Gb_create_player.Visibility = Visibility.Collapsed;
             Gb_author.Visibility = Visibility.Collapsed;
             Width = 296.305;
+
+        }
+
+        void ShowComponent()
+        {
+
+        }
+
+        void LoadPlayer()
+        {
+
+            B_load.IsEnabled = true;
+
+            HideComponents();
 
             string[] arr = new string[10];
 
@@ -107,7 +128,7 @@ namespace Lets_battle
 
         }
 
-        private void DeletePlayer()
+        void DeletePlayer()
         {
 
             StreamWriter sw = new StreamWriter("save.txt");
@@ -128,14 +149,14 @@ namespace Lets_battle
 
         }
 
-        private void LoadToLb()
+        void LoadToLb()
         {
             Tb_saved_characters.Items.Clear();
-            Width = 638;
+            
+            HideComponents();
 
             Gb_load.Visibility = Visibility.Visible;
-            Gb_create_player.Visibility = Visibility.Collapsed;
-            Gb_author.Visibility = Visibility.Collapsed;
+            Width = 638;
 
             int whereIsNextSave = 5;
             int newLineCounter = 0;
@@ -165,7 +186,7 @@ namespace Lets_battle
 
         }
 
-        private void OpenCreatePlayer()
+        void OpenCreatePlayer()
         {
             // Gb_settings.Visibility = Visibility.Collapsed;
 
@@ -176,16 +197,13 @@ namespace Lets_battle
             Width = 638;
 
             /*
-            Gb_load.Visibility = Visibility.Collapsed;
-            Gb_create_player.Visibility = Visibility.Collapsed;
-            Gb_author.Visibility = Visibility.Collapsed;
-            Gb_create_player.Visibility = Visibility.Collapsed;
-            Width = 296.305;
+            HideComponents();
             */
         }
 
-        private void ReadInput()
+        void ReadInput()
         {
+
             help.Name = tb_inputName.Text;
             help.ClassP = cb_Class.SelectedIndex;
             help.Health = Convert.ToInt32(tb_Health.Text);
@@ -198,22 +216,20 @@ namespace Lets_battle
             tb_Damage.Text = "";
             tb_Defense.Text = "";
 
-            Width = 296.305;
-            Gb_load.Visibility = Visibility.Collapsed;
-            Gb_create_player.Visibility = Visibility.Collapsed;
-            Gb_author.Visibility = Visibility.Collapsed;
+            HideComponents();
+
         }
 
-        private void RandomStat()
+        void RandomStat()
         {
-            classP = cb_Class.SelectedIndex;
+            help.ClassP = cb_Class.SelectedIndex;
             Dice dice = new Dice();
 
             int h = 0;
             int da = 0;
             int de = 0;
 
-            switch (classP)
+            switch (help.ClassP)
             {
                 case 0:
 
@@ -288,7 +304,7 @@ namespace Lets_battle
             
         }
 
-        #region author
+#region author
 
         private void OpenAuthor()
         {
@@ -325,17 +341,14 @@ namespace Lets_battle
 
         #endregion
 
-        private void OpenSettings()
+        void OpenSettings()
         {
 
             Width = 638;
 
             // Gb_settings.Visibility = Visibility.Visible;
-            Gb_load.Visibility = Visibility.Collapsed;
-            Gb_create_player.Visibility = Visibility.Collapsed;
-            Gb_author.Visibility = Visibility.Collapsed;
-            Gb_author.Visibility = Visibility.Collapsed;
-            //Width = 296.305;
+
+            //HideComponents();
 
         }
 
@@ -343,7 +356,7 @@ namespace Lets_battle
 
         #endregion
 
-        private void B_click(object sender, RoutedEventArgs e)
+        void B_click(object sender, RoutedEventArgs e)
         {
             if ((sender as Button) == B_start) { Start(); }
 
