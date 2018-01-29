@@ -12,42 +12,52 @@ namespace LetsBattleBookCase
     public class Character
     {
 
-       
+#region variables
 
-
-        #region variables
-
-        protected string name;
-        protected int health;
-        protected int damage;
-        protected int defense;
-        protected int who;
-        protected int level;
-        protected int actionpt;
-        protected int increasePoint;
-        
         protected Dice dice = new Dice();
 
         #endregion
 
 #region getAndSet
 
+        /* 
         public int Health { get { return health; } set { health = value; } }
         public int Damage { get { return damage; } set { damage = value; } }
         public int Defense { get { return defense; } set { defense = value; } }
         public int Who { get { return who; } set { who = value; } }
         public int Level { get { return level; } set { defense = value; } }
         public string Name { get { return name; } set { name = value; } }
-        public int ActionPoint { get { return actionpt; } set { actionpt = value; } }
-        public int IncreasePoint { get { return increasePoint; } set { increasePoint = value; } }
+        */
+
+        public int Health { get; set; }
+        public int Damage { get; set; }
+        public int Defense { get; set; }
+        public int Who { get; set; }
+        public int Level { get; set; }
+        public string Name { get; set; }
+        public int Learning { get; set; }
+        public int SpellDamage { get; set; }
+
+        public int Vitality { get; set; }
+        public int Wisdom { get; set; }
+        public int Inteligence { get; set; }
+        public int Strength { get; set; }
+
+        public int ActionPoint { get; set; }
+        public int IncreasePoint { get; set; }
 
         #endregion
 
         public Character() { }
 
-        public Character(int h, int da, int de, string na, int wh)
+        public Character(int vit, int str, int wis, int inte, string na, int wh)
         {
 
+            GenerateStats(vit, str, wis, inte);
+
+            Name = na;
+            Who = wh;
+            /*
             health = h;
             damage = da;
             defense = de;
@@ -55,6 +65,18 @@ namespace LetsBattleBookCase
             who = wh;
             level = 1;
             //actionpt = 5;
+            */
+        }
+
+        public void GenerateStats(int vit, int str, int wis, int inte)
+        {
+
+            Health = dice.DiceRoll(vit) + 10;
+            Damage = dice.DiceRoll(str) + 10;
+            Defense = dice.DiceRoll(vit) + 10;
+            SpellDamage = dice.DiceRoll(inte) + 10;
+            Learning = dice.DiceRoll(wis) + 10;
+            Level = 1;
 
         }
 
@@ -73,12 +95,12 @@ namespace LetsBattleBookCase
             return damageDealt;
 
         }
-
-        public bool IsAlive() { return (health > 0); }
+        
+        public bool IsAlive() { return (Health > 0); }
 
         public bool HasActionPts() { return (ActionPoint>0); }
 
-        protected void MinusHealth(int dmg) { health -= dmg; }
+        protected void MinusHealth(int dmg) { Health -= dmg; }
 
         public void IncreaseCurrentStat(int whichStat)
         {
@@ -123,7 +145,8 @@ namespace LetsBattleBookCase
     public abstract class Player : Character
     {
         public Player() { }
-        public Player(int h, int da, int de, string na, int wh) : base(h, da, de, na, wh) { }
+
+        public Player(int vit, int str, int wis, int inte, string na, int wh) : base(vit, str, wis, inte, na, wh) { }
 
 #region virtualMethods
 
@@ -145,26 +168,40 @@ namespace LetsBattleBookCase
     public class Mage : Player
     {
 
-        public Mage(int h, int da, int de, string na, int wh) : base(h, da, de, na, wh) { }
+        public Mage(int vit, int str, int wis, int inte, string na, int wh) : base(vit, str, wis, inte, na, wh) { }
         
     }
+
     public class Warrior : Player
     {
 
-        public Warrior(int h, int da, int de, string na, int wh) : base(h, da, de, na, wh) { }
+        public Warrior(int vit, int str, int wis, int inte, string na, int wh) : base(vit, str, wis, inte, na, wh) { }
 
     }
 
-    #region skills
+#region magic
 
-    public class MagicalAttack : Player
+    public class FireMagic : Player
     {
 
         public override int FireBall() { return dice.DiceRoll(Damage) + 10; }
+        
+    }
+
+    public class IceMagic : Player
+    {
 
         public override int IceBall() { return dice.DiceRoll(Damage) + 20; }
 
-        /*
+    }
+
+    /*
+    public class MagicalAttack 
+    {
+
+        
+
+        
         public override int FireBall()
         {
             int NeededActionPoints = 1;
@@ -190,10 +227,15 @@ namespace LetsBattleBookCase
             else dmg = 0;
             return dmg;
         }
-        */
+        
     }
+    */
 
-    public class PhisicalAttack : Player
+    #endregion
+
+#region physical
+
+    public class PhysicalAttack : Player
     {
 
         public override int HeavyAttack(int damageOfItem) { return dice.DiceRoll(damageOfItem) + 30; }
@@ -232,14 +274,12 @@ namespace LetsBattleBookCase
     #endregion
 
     #endregion
-
-
-
+    
     public class Creation
     {
         Dice dice = new Dice();
 
-        public Player InitialyPlayer(int h, int dam, int def, string name, int whoP, int classP)
+        public Player InitialyPlayer(int vit, int str, int wis, int inte, string na, int wh, int classP)
         {
             Dice dice = new Dice();
             int roll = dice.DiceRoll();
@@ -252,15 +292,16 @@ namespace LetsBattleBookCase
                         if (roll % 2 == 0) //if sude
                             inventoryPlayer = new Sword("Broken Sword", 5, 5);
                         else //if liche
+
                             inventoryPlayer = new Sword("Straight Sword", 10, 25);
 
                         inventoryListPlayer.Add(inventoryPlayer); //lets add that generated shit into player inventory
                         */
-                    returnPlayer = new Warrior(h, dam, def, name, whoP); //create player as warrior
+                    returnPlayer = new Warrior(vit, str, wis, inte, na, wh); //create player as warrior
                     break;
 
                 case 1: //mage
-                    returnPlayer = new Mage(h, dam, def, name, whoP);
+                    returnPlayer = new Mage(vit, str, wis, inte, na, wh);
                     break;
             }
 
@@ -284,17 +325,17 @@ namespace LetsBattleBookCase
             return returnEnemy;
 
         }
+
         protected Player ChooseOfEnemy(int whoE, Character player)
         {
 
             Player returnEnemy = null;
             int roll = dice.DiceRoll();
-
             if (roll % 2 == 0) //if sude
-                returnEnemy = new Warrior(dice.DiceRoll(player.Health) + 5, dice.DiceRoll(player.Damage) + 6, dice.DiceRoll(player.Defense) + 6, "Ferda", whoE);
+                returnEnemy = new Warrior(dice.DiceRoll(player.Vitality), dice.DiceRoll(player.Strength), dice.DiceRoll(player.Wisdom), dice.DiceRoll(player.Inteligence), "Ferda", whoE);
 
             else //if liche 
-                returnEnemy = new Mage(dice.DiceRoll(player.Health) + 3, dice.DiceRoll(player.Damage) + 7, dice.DiceRoll(player.Defense) + 2, "Janko", whoE);
+                returnEnemy = new Mage(dice.DiceRoll(player.Vitality), dice.DiceRoll(player.Strength), dice.DiceRoll(player.Wisdom), dice.DiceRoll(player.Inteligence), "Janko", whoE);
 
             return returnEnemy;
 
@@ -371,11 +412,20 @@ namespace LetsBattleBookCase
     public class Help
     {
 
-        public string Name { get; set; }
+        
         public int ClassP { get; set;  }
+
+        public string Name { get; set; }
+        /*
         public int Health { get; set;  }
         public int Damage { get; set;  }
         public int Defense { get; set; }
+        */
+        public int Vitality { get; set; }
+        public int Wisdom { get; set; }
+        public int Inteligence { get; set; }
+        public int Strength { get; set; }
+
         public bool Clicked { get; set; }
 
     }
@@ -635,11 +685,11 @@ namespace LetsBattleBookCase
 
         public LetsSayEngine() { }
 
-        public void PlayerEnemyCreation(int h, int dam, int def, string name, int classP)
+        public void PlayerEnemyCreation(int vit, int str, int wis, int inte, string name, int classP)
         {
             whoP = 0;
 
-            player = cr.InitialyPlayer(h, dam, def, name, whoP, classP);
+            player = cr.InitialyPlayer(vit, str, wis, inte, name, whoP, classP);
 
             enemy = cr.InitialyEnemy(player);
 

@@ -32,9 +32,10 @@ namespace Lets_battle
         Weapon mec = new Weapon();
 
         string name;
-        int h;
-        int dam;
-        int def;
+        int vit;
+        int str;
+        int inte;
+        int wis;
 
         public List<Inventory> inventP = new List<Inventory>();
 
@@ -66,7 +67,7 @@ namespace Lets_battle
             inventP.Add(mec.CreateSword("mec", 10));
             inventP.Add(mec.CreateSword("novy mec", 20));
             
-            player = cr.InitialyPlayer(h, dam, def, name, whoP, classP);
+            player = cr.InitialyPlayer(vit, str, wis, inte, name, whoP, classP);
             enemy = cr.InitialyEnemy(player);
 
             whoE = enemy.Who;
@@ -193,9 +194,10 @@ namespace Lets_battle
 
             name = ((MainWindow)Application.Current.MainWindow).help.Name;
             classP = ((MainWindow)Application.Current.MainWindow).help.ClassP;
-            h = ((MainWindow)Application.Current.MainWindow).help.Health;
-            dam = ((MainWindow)Application.Current.MainWindow).help.Damage;
-            def = ((MainWindow)Application.Current.MainWindow).help.Defense;
+            vit = ((MainWindow)Application.Current.MainWindow).help.Vitality;
+            str = ((MainWindow)Application.Current.MainWindow).help.Strength;
+            inte = ((MainWindow)Application.Current.MainWindow).help.Inteligence;
+            wis = ((MainWindow)Application.Current.MainWindow).help.Wisdom;
             whoP = 0;
 
         }
@@ -203,9 +205,10 @@ namespace Lets_battle
         void SetStatsToMainWindowOnClose()
         {
 
-            ((MainWindow)Application.Current.MainWindow).help.Health = player.Health;
-            ((MainWindow)Application.Current.MainWindow).help.Damage = player.Damage;
-            ((MainWindow)Application.Current.MainWindow).help.Defense = player.Defense;
+            ((MainWindow)Application.Current.MainWindow).help.Vitality = player.Vitality;
+            ((MainWindow)Application.Current.MainWindow).help.Strength = player.Strength;
+            ((MainWindow)Application.Current.MainWindow).help.Inteligence = player.Inteligence;
+            ((MainWindow)Application.Current.MainWindow).help.Wisdom = player.Wisdom;
             ((MainWindow)Application.Current.MainWindow).help.Name = player.Name;
             ((MainWindow)Application.Current.MainWindow).help.ClassP = classP;
 

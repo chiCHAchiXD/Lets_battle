@@ -19,27 +19,29 @@
         <Button x:Name="B_close" Content="Exit" HorizontalAlignment="Left" Margin="148,221,0,0" VerticalAlignment="Top" Width="130" Height="40" Click="B_click"/>
         <Button x:Name="B_author" Content="Author(s)" HorizontalAlignment="Left" Margin="6,221,0,0" VerticalAlignment="Top" Width="137" Height="40" Click="B_click"/>
         <Button x:Name="B_create_player" Content="New Player" HorizontalAlignment="Left" Margin="148,41,0,0" VerticalAlignment="Top" Width="130" Height="40" Click="B_click"/>
-    
+
         <GroupBox x:Name="Gb_create_player" Header="Create Player" Height="249" Margin="287,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="334">
             <Grid RenderTransformOrigin="0.5,0.5" Margin="10,0,-12,4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="B_read_input" Content="Write" HorizontalAlignment="Left" Margin="10,151,0,0" VerticalAlignment="Top" Width="306" Click="B_click" Height="58"/>
-                <TextBox x:Name="tb_inputName" HorizontalAlignment="Left" Height="23" Margin="194,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                <Button x:Name="B_read_input" Content="Write" HorizontalAlignment="Left" Margin="8,186,0,-11" VerticalAlignment="Top" Width="306" Click="B_click" Height="32"/>
+                <TextBox x:Name="Tb_input_name" HorizontalAlignment="Left" Height="23" Margin="194,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                 <Label Content="Would you rather be: " HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
-                <ComboBox x:Name="cb_Class" HorizontalAlignment="Left" Margin="194,38,0,0" VerticalAlignment="Top" Width="120">
+                <ComboBox x:Name="Cb_class" HorizontalAlignment="Left" Margin="194,38,0,0" VerticalAlignment="Top" Width="120">
                     <ListBoxItem Content="Warrior" TabIndex="0"/>
                     <ListBoxItem Content="Mage" TabIndex="1"/>
                 </ComboBox>
                 <Label Content="Could you write me your name: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="184"/>
-                <TextBox x:Name="tb_Defense" HorizontalAlignment="Left" Height="23" Margin="194,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="23" Text="0"/>
-                <TextBox x:Name="tb_Damage" HorizontalAlignment="Left" Height="23" Margin="194,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="23" Text="0"/>
-                <TextBox x:Name="tb_Health" HorizontalAlignment="Left" Height="23" Margin="194,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="23" Text="0"/>
-                <Label Content="Health: " HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
-                <Label Content="Damage: " HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top"/>
-                <Label Content="Defense: " HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top"/>
-                <Button x:Name="B_random_stats" Content="Generate Stats" HorizontalAlignment="Left" Margin="217,67,0,0" VerticalAlignment="Top" Width="99" Height="79" Click="B_click"/>
+                <TextBox x:Name="Tb_inteligence" HorizontalAlignment="Left" Height="23" Margin="194,122,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="23" Text="0"/>
+                <TextBox x:Name="Tb_strength" HorizontalAlignment="Left" Height="23" Margin="194,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="23" Text="0"/>
+                <TextBox x:Name="Tb_vitality" HorizontalAlignment="Left" Height="23" Margin="194,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="23" Text="0"/>
+                <Label Content="Vitality: " HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
+                <Label Content="Strength: " HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top"/>
+                <Label Content="Inteligence: " HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="B_random_stats" Content="Generate Stats" HorizontalAlignment="Left" Margin="217,67,0,0" VerticalAlignment="Top" Width="99" Height="104" Click="B_click"/>
+                <Label Content="Wisdom: " HorizontalAlignment="Left" Margin="11,146,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="Tb_wisdom" HorizontalAlignment="Left" Height="23" Margin="194,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="23" Text="0"/>
             </Grid>
         </GroupBox>
 

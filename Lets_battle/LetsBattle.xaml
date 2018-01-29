@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lets_battle"
         mc:Ignorable="d"
-        Title="Skyrim 2D" Height="689.5" Width="1138.448"
+        Title="Skyrim 2D" Height="1080" Width="1920"
     ResizeMode="NoResize" KeyDown="Key_pressed">
     <Grid RenderTransformOrigin="0.5,0.5">
         <Grid.RenderTransform>
@@ -42,15 +42,15 @@
         <Label Content="Level:" HorizontalAlignment="Left" Margin="189,68,0,0" VerticalAlignment="Top"/>
         <Label x:Name="L_playerLevel" Content=" " HorizontalAlignment="Left" Margin="260,68,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.705,-0.105"/>
         <Button x:Name="B_transfer" Content="Transfer" HorizontalAlignment="Left" Margin="-232,257,0,0" VerticalAlignment="Top" Width="172" Height="51" Click="B_click"/>
-        <TextBox x:Name="Tb_get_informed" HorizontalAlignment="Left" Margin="12,282,0,0" TextWrapping="Wrap" Width="1110" Text=" " Height="369" VerticalAlignment="Top"/>
-        <Label Content="Arena:" HorizontalAlignment="Left" Margin="793,0,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.654" Width="44" Height="26"/>
-        <Label x:Name="L_arena" Content="" HorizontalAlignment="Left" Margin="946,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.654" Width="176" Height="26"/>
+        <TextBox x:Name="Tb_get_informed" HorizontalAlignment="Left" Margin="0,762,0,0" TextWrapping="Wrap" Width="1904" Text=" " Height="289" VerticalAlignment="Top"/>
+        <Label Content="Arena:" HorizontalAlignment="Left" Margin="1521,13,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.654" Width="44" Height="26"/>
+        <Label x:Name="L_arena" Content="" HorizontalAlignment="Left" Margin="1570,13,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.654" Width="176" Height="26"/>
         <!--
         <Button x:Name="B_go_right" Content="Go right" HorizontalAlignment="Left" Margin="1041,67,0,0" VerticalAlignment="Top" Width="50" Height="51" Click="B_transfer_Click"/>
         <Button x:Name="B_go_left" Content="Go left" HorizontalAlignment="Left" Margin="986,67,0,0" VerticalAlignment="Top" Width="50" Height="51" Click="B_transfer_Click"/>
         -->
-        <Button x:Name="B_go_right" Content="Go right" HorizontalAlignment="Left" Margin="1041,67,0,0" VerticalAlignment="Top" Width="50" Height="51" Click="B_click"/>
-        <Button x:Name="B_go_left" Content="Go left" HorizontalAlignment="Left" Margin="986,67,0,0" VerticalAlignment="Top" Width="50" Height="51" Click="B_click"/>
+        <Button x:Name="B_go_right" Content="Go right" HorizontalAlignment="Left" Margin="1628,41,0,0" VerticalAlignment="Top" Width="50" Height="51" Click="B_click"/>
+        <Button x:Name="B_go_left" Content="Go left" HorizontalAlignment="Left" Margin="1573,41,0,0" VerticalAlignment="Top" Width="50" Height="51" Click="B_click"/>
         <GroupBox x:Name="Gb_attack_warrior" Header="Attack" HorizontalAlignment="Left" Height="107" Margin="182,175,0,0" VerticalAlignment="Top" Width="124">
             <Grid RenderTransformOrigin="0.5,0.5" Margin="0,0,-2,4">
                 <Grid.ColumnDefinitions>
@@ -88,6 +88,6 @@
             </Grid>
 
         </GroupBox>
-        <Button x:Name="B_close" Content="Close" HorizontalAlignment="Left" Margin="705,9,0,0" VerticalAlignment="Top" Width="83" Height="26" Click="B_click"/>
+        <Button x:Name="B_close" Content="Close" HorizontalAlignment="Left" Margin="1848,10,0,0" VerticalAlignment="Top" Width="56" Height="53" Click="B_click"/>
     </Grid>
 </Window>

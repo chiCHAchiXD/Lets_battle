@@ -65,7 +65,7 @@ namespace Lets_battle
 
             //sw.Write(DateTime.Now + Environment.NewLine + name + Environment.NewLine + classP + Environment.NewLine + h + Environment.NewLine + dam + Environment.NewLine + def + Environment.NewLine);
 
-            sw.Write(DateTime.Now + ", " + help.Name + ", " + help.ClassP + ", " + help.Health + ", " + help.Damage + ", " + help.Defense + Environment.NewLine);
+            sw.Write(DateTime.Now + ", " + help.Name + ", " + help.ClassP + ", " + help.Vitality + ", " + help.Strength + ", " + help.Inteligence + ", " + help.Wisdom + Environment.NewLine);
             MessageBox.Show("player " + help.Name + " was saved and you can load him anytime you want in load section");
 
             sw.Close();
@@ -108,9 +108,10 @@ namespace Lets_battle
 
             help.Name = arr[1];
             help.ClassP = Convert.ToInt32(arr[2]);
-            help.Health = Convert.ToInt32(arr[3]);
-            help.Damage = Convert.ToInt32(arr[4]);
-            help.Defense = Convert.ToInt32(arr[5]);
+            help.Vitality = Convert.ToInt32(arr[3]);
+            help.Strength = Convert.ToInt32(arr[4]);
+            help.Inteligence = Convert.ToInt32(arr[5]);
+            help.Wisdom = Convert.ToInt32(arr[6]);
 
             /*
            String text = help.Name + "; " + help.ClassP + "; " + help.Health + "; " + help.Damage + "; " + help.Defense;
@@ -161,28 +162,37 @@ namespace Lets_battle
             int whereIsNextSave = 5;
             int newLineCounter = 0;
 
-            var sr = new StreamReader("save.txt");
-
-            string[] line = new string[1];
-
-            while ((line[0] = sr.ReadLine()) != null)
+            try
             {
 
-                Tb_saved_characters.Items.Add(line[0] + ",");
+                var sr = new StreamReader("save.txt");
 
-                if (newLineCounter == whereIsNextSave)
+                string[] line = new string[1];
+
+                while ((line[0] = sr.ReadLine()) != null)
                 {
 
-                    Tb_saved_characters.Items.Add(Environment.NewLine);
-                    whereIsNextSave += 6;
+                    Tb_saved_characters.Items.Add(line[0] + ",");
+
+                    if (newLineCounter == whereIsNextSave)
+                    {
+
+                        Tb_saved_characters.Items.Add(Environment.NewLine);
+                        whereIsNextSave += 6;
+
+                    }
+
+                    newLineCounter++;
 
                 }
 
-                newLineCounter++;
+                sr.Close();
 
             }
 
-            sr.Close();
+            catch {  }
+
+            
 
         }
 
@@ -204,17 +214,19 @@ namespace Lets_battle
         void ReadInput()
         {
 
-            help.Name = tb_inputName.Text;
-            help.ClassP = cb_Class.SelectedIndex;
-            help.Health = Convert.ToInt32(tb_Health.Text);
-            help.Damage = Convert.ToInt32(tb_Damage.Text);
-            help.Defense = Convert.ToInt32(tb_Defense.Text);
-            
-            tb_inputName.Text = null;
-            cb_Class.SelectedValue = -1;
-            tb_Health.Text = "";
-            tb_Damage.Text = "";
-            tb_Defense.Text = "";
+            help.Name = Tb_input_name.Text;
+            help.ClassP = Cb_class.SelectedIndex;
+            help.Vitality = Convert.ToInt32(Tb_vitality.Text);
+            help.Strength = Convert.ToInt32(Tb_strength.Text);
+            help.Wisdom = Convert.ToInt32(Tb_wisdom.Text);
+            help.Inteligence = Convert.ToInt32(Tb_inteligence.Text);
+
+            Tb_input_name.Text = null;
+            Cb_class.SelectedValue = -1;
+            Tb_vitality.Text = "";
+            Tb_strength.Text = "";
+            Tb_wisdom.Text = "";
+            Tb_inteligence.Text = "";
 
             HideComponents();
 
@@ -222,74 +234,83 @@ namespace Lets_battle
 
         void RandomStat()
         {
-            help.ClassP = cb_Class.SelectedIndex;
+            help.ClassP = Cb_class.SelectedIndex;
             Dice dice = new Dice();
 
-            int h = 0;
-            int da = 0;
-            int de = 0;
+            int vit = 0;
+            int str = 0;
+            int inte = 0;
+            int wis = 0;
 
             switch (help.ClassP)
             {
                 case 0:
 
-                    h = dice.DiceRoll(21) + dice.DiceRoll(11);
-                    da = dice.DiceRoll(19) + dice.DiceRoll(9);
-                    de = dice.DiceRoll(18) + dice.DiceRoll(8);
-
+                    vit = dice.DiceRoll(21) + dice.DiceRoll(11);
+                    str = dice.DiceRoll(19) + dice.DiceRoll(9);
+                    inte = dice.DiceRoll(18) + dice.DiceRoll(8);
+                    wis = dice.DiceRoll(10);
                     #region if
 
-                    if ( h < 11 ) 
+                    if (vit < 11) 
                     {
 
-                        h = 11;
+                        vit = 11;
                         
                     }
 
-                    if ( da < 9 )
+                    if (str < 9)
                     {
 
-                        da = 9;
+                        str = 9;
 
                     }
-
-                    if ( de < 8 )
+                    /*
+                    if (inte < 8)
                     {
 
-                        de = 8;
+                        inte = 8;
 
                     }
-
+                    */
                     #endregion
 
                     break;
 
                 case 1:
 
-                    h = dice.DiceRoll(18) + dice.DiceRoll(8);
-                    da = dice.DiceRoll(22) + dice.DiceRoll(12);
-                    de = dice.DiceRoll(15) + dice.DiceRoll(5);
+                    vit = dice.DiceRoll(18) + dice.DiceRoll(8);
+                    str = dice.DiceRoll(22) + dice.DiceRoll(12);
+                    inte = dice.DiceRoll(15) + dice.DiceRoll(5);
+                    wis = dice.DiceRoll(20);
 
                     #region if
-
-                    if (h < 8)
+                    /*
+                    if (vit < 8)
                     {
 
-                        h = 8; 
+                        vit = 8; 
 
                     }
 
-                    if (da < 12)
+                    if (str < 12)
                     {
 
-                        da = 12;
+                        str = 12;
+
+                    }
+                    */
+                    if (inte < 10)
+                    {
+
+                        inte = 10;
 
                     }
 
-                    if (de < 5)
+                    if (wis < 10)
                     {
 
-                        de = 5;
+                        wis = 10;
 
                     }
 
@@ -298,10 +319,10 @@ namespace Lets_battle
                     break;
             }
 
-            tb_Health.Text = h.ToString();
-            tb_Damage.Text = da.ToString();
-            tb_Defense.Text = de.ToString();
-            
+            Tb_vitality.Text = vit.ToString();
+            Tb_strength.Text = str.ToString();
+            Tb_inteligence.Text = inte.ToString();
+            Tb_wisdom.Text = wis.ToString();
         }
 
 #region author
@@ -390,7 +411,7 @@ namespace Lets_battle
 
             else if ((sender as Button) == B_settings) { OpenSettings(); }
             
-            else if ((sender as Button) == B_close) { Hide(); /*Close();*/ }
+            else if ((sender as Button) == B_close) { Close(); }
         }
     }
 }
